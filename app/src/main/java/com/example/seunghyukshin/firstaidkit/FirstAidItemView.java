@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class FirstAidItemView extends LinearLayout{
     TextView textView;
-    TextView textView2;
+    //TextView textView2;
     public FirstAidItemView(Context context) {
         super(context);
         init(context);
@@ -22,13 +22,15 @@ public class FirstAidItemView extends LinearLayout{
         inflater.inflate(R.layout.first_aid_item,this,true);
 
         textView = (TextView) findViewById(R.id.textView);
-        textView2 = (TextView) findViewById(R.id.textView2);
+        //textView2 = (TextView) findViewById(R.id.textView2);
     }
 
     public void setName(String name){
         textView.setText(name);
     }
+    /*
     public void setContent(String content){
         textView2.setText(content);
     }
+    */
 }
