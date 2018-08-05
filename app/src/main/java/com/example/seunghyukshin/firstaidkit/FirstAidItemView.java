@@ -31,4 +31,5 @@ public class FirstAidItemView extends LinearLayout{
     public void setContent(String content){
         textView2.setText(content);
     }
+
 }

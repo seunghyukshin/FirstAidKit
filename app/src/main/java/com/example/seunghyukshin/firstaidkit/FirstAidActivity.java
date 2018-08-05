@@ -25,18 +25,7 @@ public class FirstAidActivity extends AppCompatActivity {
 
         listView.setAdapter(adapter);
 
-
-
-
-
     }
-
-
-
-
-
-
-
 
     class FirstAidAdapter extends BaseAdapter{
         ArrayList<FirstAidItem> items = new ArrayList<FirstAidItem>();
