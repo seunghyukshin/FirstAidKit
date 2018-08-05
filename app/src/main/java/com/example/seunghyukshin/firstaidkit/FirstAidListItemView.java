@@ -9,17 +9,17 @@ import android.widget.TextView;
  * Created by SEUNGHYUK SHIN on 2018-08-02.
  */
 
-public class FirstAidItemView extends LinearLayout{
+public class FirstAidListItemView extends LinearLayout{
     TextView textView;
     //TextView textView2;
-    public FirstAidItemView(Context context) {
+    public FirstAidListItemView(Context context) {
         super(context);
         init(context);
     }
 
     public void init(Context context){
         LayoutInflater inflater =  (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.first_aid_item,this,true);
+        inflater.inflate(R.layout.first_aid_list_item,this,true);
 
         textView = (TextView) findViewById(R.id.textView);
         //textView2 = (TextView) findViewById(R.id.textView2);

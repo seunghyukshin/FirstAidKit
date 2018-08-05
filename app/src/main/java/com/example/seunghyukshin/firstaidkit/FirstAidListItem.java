@@ -3,15 +3,15 @@ package com.example.seunghyukshin.firstaidkit;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class FirstAidItem {
+public class FirstAidListItem {
 
     String name;
     //String contents;
-    public FirstAidItem(String name){
+    public FirstAidListItem(String name){
         this.name = name;
     }
     /*
-    public FirstAidItem(String name,String contents){
+    public FirstAidListItem(String name,String contents){
         this.name= name;
         this.contents= contents;
     }*/

@@ -16,9 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FirstAidActivity" />
+        <activity android:name=".FirstAidListActivity" />
         <activity android:name=".DiagnosisActivity" />
-        <activity android:name=".FirstAidItem"></activity>
+        <activity android:name=".FirstAidListItem"></activity>
     </application>
 
 </manifest>
