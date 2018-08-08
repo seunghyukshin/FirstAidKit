@@ -19,10 +19,7 @@
         <activity android:name=".FirstAidListActivity" />
         <activity android:name=".DiagnosisActivity" />
         <activity android:name=".DiagnosisState" />
-        <activity android:name=".FirstAidListItem" >
-
-
-        </activity>
+        <activity android:name=".FirstAidListItem" />
     </application>
 
 </manifest>
