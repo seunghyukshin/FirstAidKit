@@ -1,30 +1,36 @@
 package com.example.seunghyukshin.firstaidkit;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-
-public class FirstAidListActivity extends AppCompatActivity {
+public class FirstAidListActivity extends BaseActivity {
     ListView listView_today_fa; //오늘의 응급상황
     ListView listView_fa;//응급처치법 쭈루룩
     FirstAidAdapter adapter_fa;
     FirstAidAdapter adapter_today_fa;
+    LinearLayout layout_fa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_aid_list);
 
+        //배경화면색
+        layout_fa = (LinearLayout) findViewById(R.id.FirstAidListLayout);
+        layout_fa.setBackgroundColor(Color.rgb(200,191,231));
+
         listView_today_fa = (ListView) findViewById(R.id.listView);
         adapter_today_fa = new FirstAidAdapter();
         // 우선순위 알고리즘추가 할것
         adapter_today_fa.addItem(new FirstAidListItem("열사병"));
-        adapter_today_fa.addItem(new FirstAidListItem("식중독"));
 
         listView_today_fa.setAdapter(adapter_today_fa);
 
@@ -105,7 +111,13 @@ public class FirstAidListActivity extends AppCompatActivity {
             FirstAidListItem item = items.get(position);
             view.setName(item.getName());
             //view.setContent(item.getContents());
+
+//            if (convertView == null) {
+//                view.setTypeface(Typeface.createFromAsset(convertView.getContext().getAssets(), "fonts/NanumBarunGothicBold.ttf"));
+//            }
+//            return convertView;
             return view;
+
         }
     }
 
