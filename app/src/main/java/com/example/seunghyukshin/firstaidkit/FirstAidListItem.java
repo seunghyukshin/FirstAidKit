@@ -6,7 +6,11 @@ import android.os.Bundle;
 public class FirstAidListItem {
 
     String name;
+    public FirstAidListItem(){
+
+    }
     //String contents;
+
     public FirstAidListItem(String name){
         this.name = name;
     }
