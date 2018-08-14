@@ -7,6 +7,7 @@ public class ShortWeather {
     private String wfKor; // 상태
     private String pop; // 강수확률
     private String reh; // 습도
+    private String pty; // 강수 상태
     private String tmx;
     private String tmn;
 
@@ -62,6 +63,9 @@ public class ShortWeather {
         this.wfKor = wfKor;
     }
 
+    public void setPty(String pty){
+        this.pty = pty;
+    }
     public String getHour() {
         return hour;
     }
@@ -73,4 +77,9 @@ public class ShortWeather {
     public String getWfKor() {
         return wfKor;
     }
+
+    public String getPty(){
+        return pty;
+    }
+
 }

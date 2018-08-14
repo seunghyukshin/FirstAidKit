@@ -1,6 +1,7 @@
 package com.example.seunghyukshin.firstaidkit;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     Button button_fa;
 
     TextView textView_shortWeather;
+    TextView helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         textView_shortWeather = (TextView)findViewById(R.id.shortWeather);
+        helper = findViewById(R.id.helper);
 
         new ReceiveShortWeather().execute();
     }
@@ -94,14 +97,64 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Long result) {
             String data = "";
 
-            for(int i=0; i<shortWeathers.size(); i++) {
-                data += shortWeathers.get(i).getDay() + "일 " +
-                        shortWeathers.get(i).getHour() + "시 " +
-                        shortWeathers.get(i).getTemp() + "도 " +
-                        shortWeathers.get(i).getWfKor() + " " +
-                        shortWeathers.get(i).getPop() + "\n";
+//            for(int i=0; i<shortWeathers.size(); i++) {
+//                data += shortWeathers.get(i).getDay() + "일 " +
+//                        shortWeathers.get(i).getHour() + "시 " +
+//                        shortWeathers.get(i).getTemp() + "도 " +
+//                        shortWeathers.get(i).getWfKor() + " " +
+//                        shortWeathers.get(i).getPop() + "\n";
+//            }
+
+            String rain = "";
+            if (shortWeathers.get(0).getPty() == "0"){
+                rain = "없음";
+            }
+            else if(shortWeathers.get(0).getPty() == "1"){
+                rain = "비";
+            }
+            else if(shortWeathers.get(0).getPty() == "2"){
+                rain = "비/눈";
+            }
+            else if(shortWeathers.get(0).getPty() == "3"){
+                rain = "눈";
+            }
+            else{
+                rain = "없음";
+            }
+            data += String.format("%20s  %10s\n","기온",shortWeathers.get(0).getTemp())+
+                    String.format("%20s  %10s\n","강수 확률",shortWeathers.get(0).getPop())+
+                    String.format("%20s  %10s\n","습도",shortWeathers.get(0).getReh())+
+                    String.format("%20s  %10s\n","구름",shortWeathers.get(0).getWfKor())+
+                    String.format("%20s  %10s\n","강수상태",rain)+
+                    String.format("%20s  %10s\n","미세먼지","")+
+                    String.format("%20s  %10s","초미세먼지","");
+
+            String info = "";
+            if(Double.parseDouble(shortWeathers.get(0).getTemp()) >= 40){
+                info += "날이 매우 덥습니다. 열사병을 조심하세요.\n";
+            }
+            if(Integer.parseInt(shortWeathers.get(0).getPop()) >= 0){
+                info += "비 올 확률이 높아요! 우산을 챙겨주세요.\n";
             }
 
+            String sky = shortWeathers.get(0).getWfKor();
+            if(sky == "맑음"){
+                textView_shortWeather.setBackgroundResource(R.drawable.sunny);
+            }
+            else if(sky == "구름 조금"){
+                textView_shortWeather.setBackgroundResource(R.drawable.s_cloud);
+            }
+            else if(sky == "구름 많음" || sky == "흐림"){
+                textView_shortWeather.setBackgroundResource(R.drawable.m_cloud);
+            }
+            else{
+                textView_shortWeather.setBackgroundResource(R.drawable.sunny);
+            }
+
+            if (shortWeathers.get(0).getPty() == "1"){
+                textView_shortWeather.setBackgroundResource(R.drawable.rain);
+            }
+            helper.setText(info);
             textView_shortWeather.setText(data);
         }
 
@@ -115,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean onPop = false;
                 boolean onEnd = false;
                 boolean isItemTag1 = false;
+                boolean onPty = false;
                 int i = 0;
 
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -153,6 +207,10 @@ public class MainActivity extends AppCompatActivity {
                             shortWeathers.get(i).setPop(parser.getText());
                             onPop = true;
                         }
+                        if (tagName.equals("pty") && !onPty) {
+                            shortWeathers.get(i).setPty(parser.getText());
+                            onPty = true;
+                        }
                     } else if (eventType == XmlPullParser.END_TAG) {
                         if (tagName.equals("s06") && onEnd == false) {
                             i++;
@@ -163,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
                             onPop = false;
                             isItemTag1 = false;
                             onEnd = true;
+                            onPty = true;
                         }
                     }
 
