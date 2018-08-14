@@ -1,7 +1,9 @@
 package com.example.seunghyukshin.firstaidkit;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,6 +14,7 @@ import android.widget.TextView;
 public class FirstAidListItemView extends LinearLayout{
     TextView textView;
     //TextView textView2;
+    BaseActivity ba;
     public FirstAidListItemView(Context context) {
         super(context);
         init(context);
@@ -20,10 +23,10 @@ public class FirstAidListItemView extends LinearLayout{
     public void init(Context context){
         LayoutInflater inflater =  (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.first_aid_list_item,this,true);
-
+        ba=new BaseActivity();
         textView = (TextView) findViewById(R.id.textView);
-        //textView2 = (TextView) findViewById(R.id.textView2);
-    }
+        //textView.setTypeface(Typeface.createFromAsset( /*ba.getAssets()*/, "fonts/BMDOHYEON_ttf.ttf"));
+        }
 
     public void setName(String name){
         textView.setText(name);

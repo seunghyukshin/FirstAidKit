@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:padding="40dp"
     android:orientation="vertical"
-    tools:context="com.example.seunghyukshin.firstaidkit.FirstAidListActivity">
+    android:id="@+id/FirstAidListLayout"
+    tools:context="com.example.seunghyukshin.firstaidkit.FirstAidListActivity"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/listView"
-            android:background="@drawable/layout_border_today">
+            android:background="@drawable/ayeon">
         </ListView>
     </LinearLayout>
 
