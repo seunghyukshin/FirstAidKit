@@ -20,7 +20,7 @@ public class BaseActivity extends Activity{
     public void setContentView(int layoutResId){
         super.setContentView(layoutResId);
         if(mTypeface == null){
-            mTypeface = Typeface.createFromAsset(this.getAssets(),"fonts/BMDOHYEON_ttf.ttf");
+            mTypeface = Typeface.createFromAsset(this.getAssets(), "fonts/BMDOHYEON_ttf.ttf");
         }
         setGlobalFont(getWindow().getDecorView());
     }
