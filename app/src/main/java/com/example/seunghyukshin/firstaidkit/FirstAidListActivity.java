@@ -30,6 +30,7 @@ public class FirstAidListActivity extends BaseActivity {
         listView_today_fa = (ListView) findViewById(R.id.listView);
         adapter_today_fa = new FirstAidAdapter();
         // 우선순위 알고리즘추가 할것
+
         adapter_today_fa.addItem(new FirstAidListItem("열사병"));
 
         listView_today_fa.setAdapter(adapter_today_fa);
