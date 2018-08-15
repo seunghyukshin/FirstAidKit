@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.seunghyukshin.firstaidkit">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,6 @@
         <activity android:name=".DiagnosisActivity" />
         <activity android:name=".DiagnosisState" />
         <activity android:name=".FirstAidListItem" />
+        <activity android:name=".SettingActivity"></activity>
     </application>
-
 </manifest>
