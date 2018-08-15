@@ -1,9 +1,11 @@
 package com.example.seunghyukshin.firstaidkit;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-public class FirstAidListActivity extends BaseActivity {
+public class FirstAidListActivity extends AppCompatActivity {
     ListView listView_today_fa; //오늘의 응급상황
     ListView listView_fa;//응급처치법 쭈루룩
     FirstAidAdapter adapter_fa;
@@ -30,7 +32,6 @@ public class FirstAidListActivity extends BaseActivity {
         listView_today_fa = (ListView) findViewById(R.id.listView);
         adapter_today_fa = new FirstAidAdapter();
         // 우선순위 알고리즘추가 할것
-
         adapter_today_fa.addItem(new FirstAidListItem("열사병"));
 
         listView_today_fa.setAdapter(adapter_today_fa);
@@ -68,7 +69,8 @@ public class FirstAidListActivity extends BaseActivity {
         listView_fa.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                FirstAidListItem item = (FirstAidListItem) adapter_fa.getItem(position);
+                //FirstAidListItem item = (FirstAidListItem) adapter_fa.getItem(position);
+                FirstAidListItem item= (FirstAidListItem) adapter_fa.items.get(position);
 
                 //Intent intent = new Intent( FirstAidListActivity.class, FirstAidListActivity.class);
                 // startActivity(intent);
@@ -80,8 +82,15 @@ public class FirstAidListActivity extends BaseActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+            Intent intent =  new Intent(FirstAidListActivity.this,FirstAidActivity.class);
+            startActivityForResult(intent,1);
+
+        return super.onOptionsItemSelected(item);
 
 
+    }
 
     class FirstAidAdapter extends BaseAdapter{
         ArrayList<FirstAidListItem> items = new ArrayList<FirstAidListItem>();

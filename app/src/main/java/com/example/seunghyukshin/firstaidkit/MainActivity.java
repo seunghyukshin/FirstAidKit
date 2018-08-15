@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         new ReceiveShortWeather().execute();
     }
+
     public class ReceiveShortWeather extends AsyncTask<URL, Integer, Long> {
 
         ArrayList<ShortWeather> shortWeathers = new ArrayList<ShortWeather>();
