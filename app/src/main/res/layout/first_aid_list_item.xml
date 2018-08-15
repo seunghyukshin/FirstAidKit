@@ -20,6 +20,7 @@
             android:text="newText"
             android:textSize="20dp"
             android:id="@+id/textView"
+            android:fontFamily="@font/bmdohyeon"
             android:textColor="@android:color/white"
             />
     </LinearLayout>
