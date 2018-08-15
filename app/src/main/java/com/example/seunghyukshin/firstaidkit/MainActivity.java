@@ -1,11 +1,12 @@
 package com.example.seunghyukshin.firstaidkit;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,22 +16,12 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 public class MainActivity extends AppCompatActivity {
     Button button_diag;
@@ -43,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // 액션바 설정
+        getSupportActionBar().setTitle("MainActivity");
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF339999));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         button_diag = (Button) findViewById(R.id.button_diagnosis);
         button_fa = (Button) findViewById(R.id.button_first_aid);
@@ -68,6 +66,33 @@ public class MainActivity extends AppCompatActivity {
 
         new ReceiveShortWeather().execute();
     }
+
+    //액션버튼 메뉴 액션바에 집어 넣기
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    //액션버튼을 클릭했을때의 동작
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        //or switch문을 이용하면 될듯 하다.
+        if (id == android.R.id.home) {
+            Toast.makeText(this, "홈", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (id == R.id.action_setting) {
+//            Toast.makeText(this, "설정 클릭", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public class ReceiveShortWeather extends AsyncTask<URL, Integer, Long> {
 
         ArrayList<ShortWeather> shortWeathers = new ArrayList<ShortWeather>();
@@ -95,40 +120,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Long result) {
-            String data = "";
+            setWeather();
+            setShowSky();
+        }
 
-//            for(int i=0; i<shortWeathers.size(); i++) {
-//                data += shortWeathers.get(i).getDay() + "일 " +
-//                        shortWeathers.get(i).getHour() + "시 " +
-//                        shortWeathers.get(i).getTemp() + "도 " +
-//                        shortWeathers.get(i).getWfKor() + " " +
-//                        shortWeathers.get(i).getPop() + "\n";
-//            }
-
-            String rain = "";
-            if (shortWeathers.get(0).getPty() == "0"){
-                rain = "없음";
-            }
-            else if(shortWeathers.get(0).getPty() == "1"){
-                rain = "비";
-            }
-            else if(shortWeathers.get(0).getPty() == "2"){
-                rain = "비/눈";
-            }
-            else if(shortWeathers.get(0).getPty() == "3"){
-                rain = "눈";
-            }
-            else{
-                rain = "없음";
-            }
-            data += String.format("%20s  %10s\n","기온",shortWeathers.get(0).getTemp())+
-                    String.format("%20s  %10s\n","강수 확률",shortWeathers.get(0).getPop())+
-                    String.format("%20s  %10s\n","습도",shortWeathers.get(0).getReh())+
-                    String.format("%20s  %10s\n","구름",shortWeathers.get(0).getWfKor())+
-                    String.format("%20s  %10s\n","강수상태",rain)+
-                    String.format("%20s  %10s\n","미세먼지","")+
-                    String.format("%20s  %10s","초미세먼지","");
-
+        void setShowSky(){
             String info = "";
             if(Double.parseDouble(shortWeathers.get(0).getTemp()) >= 40){
                 info += "날이 매우 덥습니다. 열사병을 조심하세요.\n";
@@ -155,9 +151,39 @@ public class MainActivity extends AppCompatActivity {
                 textView_shortWeather.setBackgroundResource(R.drawable.rain);
             }
             helper.setText(info);
-            textView_shortWeather.setText(data);
         }
 
+        void setWeather(){
+            String data;
+            String rain;
+
+            if (shortWeathers.get(0).getPty() == "0"){
+                rain = "없음";
+            }
+            else if(shortWeathers.get(0).getPty() == "1"){
+                rain = "비";
+            }
+            else if(shortWeathers.get(0).getPty() == "2"){
+                rain = "비/눈";
+            }
+            else if(shortWeathers.get(0).getPty() == "3"){
+                rain = "눈";
+            }
+            else{
+                rain = "없음";
+            }
+
+            data = String.format("%20s  %10s도\n","기온",shortWeathers.get(0).getTemp())+
+                    String.format("%20s  %10s\n","강수 확률",shortWeathers.get(0).getPop() + "%")+
+                    String.format("%20s  %10s\n","습도",shortWeathers.get(0).getReh() + "%")+
+                    String.format("%20s  %10s\n","구름",shortWeathers.get(0).getWfKor())+
+                    String.format("%20s  %10s\n","강수상태",rain)+
+                    String.format("%20s  %10s\n","미세먼지","")+
+                    String.format("%20s  %10s","초미세먼지","");
+
+            textView_shortWeather.setText(data);
+
+        }
         void parseXML(String xml) {
             try {
                 String tagName = "";
@@ -167,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean onWfKor = false;
                 boolean onPop = false;
                 boolean onEnd = false;
+                boolean onReh = false;
                 boolean isItemTag1 = false;
                 boolean onPty = false;
                 int i = 0;
@@ -210,6 +237,10 @@ public class MainActivity extends AppCompatActivity {
                         if (tagName.equals("pty") && !onPty) {
                             shortWeathers.get(i).setPty(parser.getText());
                             onPty = true;
+                        }
+                        if (tagName.equals("reh") && !onReh) {
+                            shortWeathers.get(i).setReh(parser.getText());
+                            onReh = true;
                         }
                     } else if (eventType == XmlPullParser.END_TAG) {
                         if (tagName.equals("s06") && onEnd == false) {
