@@ -1,17 +1,22 @@
 package com.example.seunghyukshin.firstaidkit;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 public class FirstAidListActivity extends AppCompatActivity{
@@ -35,9 +40,6 @@ public class FirstAidListActivity extends AppCompatActivity{
         adapter_today_fa.addItem(new FirstAidListItem("열사병"));
 
         listView_today_fa.setAdapter(adapter_today_fa);
-
-
-
 
 
         listView_fa = (ListView) findViewById(R.id.listView2);
@@ -80,10 +82,14 @@ public class FirstAidListActivity extends AppCompatActivity{
 
             }
         });
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+            Intent intent =  new Intent(FirstAidListActivity.this,FirstAidActivity.class);
+            startActivityForResult(intent,1);
 
-
-
+        return super.onOptionsItemSelected(item);
     }
 
 
