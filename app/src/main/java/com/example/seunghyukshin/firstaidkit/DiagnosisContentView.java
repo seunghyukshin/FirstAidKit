@@ -3,13 +3,13 @@ package com.example.seunghyukshin.firstaidkit;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class DiagnosisContentView extends LinearLayout {
     TextView textView;
     CheckBox Cbox;
-
 
     public DiagnosisContentView(Context context) {
         super(context);

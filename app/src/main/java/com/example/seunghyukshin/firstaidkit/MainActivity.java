@@ -1,13 +1,11 @@
 package com.example.seunghyukshin.firstaidkit;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         textView_shortWeather = (TextView)findViewById(R.id.shortWeather);
         helper = findViewById(R.id.helper);
 
+
+
         new ReceiveShortWeather().execute();
     }
 
@@ -81,38 +81,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-        //or switch문을 이용하면 될듯 하다.
         if (id == android.R.id.home) {
-
-            NotificationManager notificationManager= (NotificationManager)MainActivity.this.getSystemService(MainActivity.this.NOTIFICATION_SERVICE);
-            Intent intent1 = new Intent(MainActivity.this.getApplicationContext(),MainActivity.class); //인텐트 생성.
-
-            Notification.Builder builder = new Notification.Builder(getApplicationContext());
-            intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            //현재 액티비티를 최상으로 올리고, 최상의 액티비티를 제외한 모든 액티비티를 없앤다.
-
-            PendingIntent pendingNotificationIntent = PendingIntent.getActivity( MainActivity.this,0, intent1,PendingIntent.FLAG_UPDATE_CURRENT);
-            //PendingIntent는 일회용 인텐트 같은 개념입니다.
-            builder.setSmallIcon(R.drawable.setting_icon).setTicker("HETT").setWhen(System.currentTimeMillis())
-                    .setNumber(1).setContentTitle("푸쉬 제목").setContentText("푸쉬내용")
-                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE).setContentIntent(pendingNotificationIntent).setAutoCancel(true).setOngoing(true);
-            //해당 부분은 API 4.1버전부터 작동합니다.
-
-            notificationManager.notify(1, builder.getNotification()); // Notification send
-
             Toast.makeText(this, "홈", Toast.LENGTH_SHORT).show();
 
             return true;
         }
         if (id == R.id.action_setting) {
-//            Toast.makeText(this, "설정 클릭", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, SettingActivity.class);
             startActivity(intent);
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     public class ReceiveShortWeather extends AsyncTask<URL, Integer, Long> {
 
@@ -150,9 +133,13 @@ public class MainActivity extends AppCompatActivity {
             if(Double.parseDouble(shortWeathers.get(0).getTemp()) >= 40){
                 info += "날이 매우 덥습니다. 열사병을 조심하세요.\n";
             }
-            if(Integer.parseInt(shortWeathers.get(0).getPop()) >= 0){
+            else if(Integer.parseInt(shortWeathers.get(0).getPop()) >= 50){
                 info += "비 올 확률이 높아요! 우산을 챙겨주세요.\n";
             }
+            else{
+                info += "놀러나가기 좋은 날씨네요!\n";
+            }
+
 
             String sky = shortWeathers.get(0).getWfKor();
             if(sky == "맑음"){
