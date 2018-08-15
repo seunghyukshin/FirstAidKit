@@ -19,9 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".FirstAidListActivity" />
+        <activity android:name=".FirstAidActivity" />
         <activity android:name=".DiagnosisActivity" />
         <activity android:name=".DiagnosisState" />
-        <activity android:name=".FirstAidListItem" />
         <activity android:name=".SettingActivity"></activity>
     </application>
 </manifest>
