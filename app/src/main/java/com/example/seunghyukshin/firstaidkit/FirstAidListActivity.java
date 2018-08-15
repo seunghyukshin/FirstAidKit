@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-public class FirstAidListActivity extends AppCompatActivity {
+public class FirstAidListActivity extends AppCompatActivity{
     ListView listView_today_fa; //오늘의 응급상황
     ListView listView_fa;//응급처치법 쭈루룩
     FirstAidAdapter adapter_fa;
@@ -70,10 +70,14 @@ public class FirstAidListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 //FirstAidListItem item = (FirstAidListItem) adapter_fa.getItem(position);
-                FirstAidListItem item= (FirstAidListItem) adapter_fa.items.get(position);
+                FirstAidListItem item= (FirstAidListItem) adapter_fa.items.get(position);//선택한 병
 
-                //Intent intent = new Intent( FirstAidListActivity.class, FirstAidListActivity.class);
-                // startActivity(intent);
+                Intent intent = new Intent( FirstAidListActivity.this, FirstAidActivity.class);
+                String name = item.getName();
+                intent.putExtra("NAME",name);
+                startActivity(intent);
+
+
             }
         });
 
@@ -82,15 +86,6 @@ public class FirstAidListActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-            Intent intent =  new Intent(FirstAidListActivity.this,FirstAidActivity.class);
-            startActivityForResult(intent,1);
-
-        return super.onOptionsItemSelected(item);
-
-
-    }
 
     class FirstAidAdapter extends BaseAdapter{
         ArrayList<FirstAidListItem> items = new ArrayList<FirstAidListItem>();
