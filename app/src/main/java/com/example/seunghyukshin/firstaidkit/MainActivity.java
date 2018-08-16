@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
     TextView textView_shortWeather;
     TextView helper;
 
+    private String dataTemp;
+    private String dataPop;
+    private String dataReh;
+    private String dataWfKor;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, FirstAidListActivity.class);
+                intent.putExtra("기온",dataTemp);
+                intent.putExtra("강수 확률",dataPop);
+                intent.putExtra("습도",dataReh);
+                intent.putExtra("구름",dataWfKor);
                 startActivity(intent);
             }
         });
@@ -126,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Long result) {
             setWeather();
             setShowSky();
+            setWeatherData();
         }
 
         void setShowSky(){
@@ -190,7 +201,13 @@ public class MainActivity extends AppCompatActivity {
                     String.format("%20s  %10s","초미세먼지","");
 
             textView_shortWeather.setText(data);
-
+        }
+        //intent넘어갈때 넘겨줄 날씨정보
+        void setWeatherData(){
+            dataTemp = shortWeathers.get(0).getTemp();
+            dataPop = shortWeathers.get(0).getPop();
+            dataReh = shortWeathers.get(0).getReh();
+            dataWfKor = shortWeathers.get(0).getWfKor();
         }
         void parseXML(String xml) {
             try {
@@ -270,5 +287,6 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
     }
 }

@@ -27,6 +27,12 @@ public class FirstAidListActivity extends AppCompatActivity {
     FirstAidAdapter adapter_fa;
     FirstAidAdapter adapter_today_fa;
     LinearLayout layout_fa;
+
+
+    String dataTemp;
+    String dataPop;
+    String dataReh;
+    String dataWfKor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +46,6 @@ public class FirstAidListActivity extends AppCompatActivity {
         adapter_today_fa = new FirstAidAdapter();
         // 우선순위 알고리즘추가 할것
         adapter_today_fa.addItem(new FirstAidListItem("열사병"));
-
         listView_today_fa.setAdapter(adapter_today_fa);
 
 
@@ -82,6 +87,45 @@ public class FirstAidListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        //인텐트 넘어오면서 받아온 날씨정보들
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                dataTemp = null;
+                dataPop = null;
+                dataReh = null;
+                dataWfKor = null;
+            } else {
+                dataTemp= extras.getString("기온");
+                dataPop= extras.getString("강수확률");
+                dataReh= extras.getString("습도");
+                dataWfKor= extras.getString("구름");
+            }
+        }else {
+            dataTemp= (String) savedInstanceState.getSerializable("기온");
+            dataPop= (String) savedInstanceState.getSerializable("강수확률");
+            dataReh= (String) savedInstanceState.getSerializable("습도");
+            dataWfKor= (String) savedInstanceState.getSerializable("구름");
+        }
+
+        setAdapterTodayFA();
+
+    }
+
+    //가져온 날씨정보로 조건에 맞을시 출력해주도록
+    private void setAdapterTodayFA(){
+        //if dataTemp>20 일때 열사병
+        /*
+        dataTemp
+        dataPop;
+        dataReh;
+        dataWfKor;*/
+
+
+        adapter_today_fa.addItem(new FirstAidListItem(dataTemp+dataPop+dataReh+dataWfKor));
+        listView_today_fa.setAdapter(adapter_today_fa);
     }
 
     @Override
