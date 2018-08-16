@@ -31,9 +31,15 @@ public class DiagnosisActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_view);
         adapter = new DiagnosisAdapter();
 
-        adapter.addItem(new DiagnosisContent("머리가 아픈가?",false));
+        adapter.addItem(new DiagnosisContent("두통이 있다.",false));
         adapter.addItem(new DiagnosisContent("구토증세가 있다.",false));
         adapter.addItem(new DiagnosisContent("열이 많이난다.",false));
+        adapter.addItem(new DiagnosisContent("무력감이 있다.",false));
+        adapter.addItem(new DiagnosisContent("근육떨림 증세가 있다.",false));
+        adapter.addItem(new DiagnosisContent("심장을 쥐어짜는 통증이 있다.",false));
+        adapter.addItem(new DiagnosisContent("오한이 느껴진다.",false));
+        adapter.addItem(new DiagnosisContent("피부가 건조해 불편함이 느껴진다.",false));
+        adapter.addItem(new DiagnosisContent("피부가 창백하다.",false));
         
         listView.setAdapter(adapter);
 
