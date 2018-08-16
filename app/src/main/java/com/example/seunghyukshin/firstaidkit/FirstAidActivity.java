@@ -40,8 +40,12 @@ public class FirstAidActivity extends AppCompatActivity {
             name= (String) savedInstanceState.getSerializable("NAME");
         }
         TextView_name.setText(name);
+        setFirstAidMap();
+        TextView_contents.setText(firstAidMap.get(name));
+    }
 
 
+    private void setFirstAidMap(){
         firstAidMap.put("골절","뼈가 부러지셧다고요? 119에 전화하세요!");
         firstAidMap.put("기도폐쇄","기도가 막히셨다고요?");
         firstAidMap.put("뇌수막염","");
@@ -62,9 +66,6 @@ public class FirstAidActivity extends AppCompatActivity {
         firstAidMap.put("천식발작","");
         firstAidMap.put("출혈","");
         firstAidMap.put("화상","");
-
-        TextView_contents.setText(firstAidMap.get(name));
     }
-
 
 }
