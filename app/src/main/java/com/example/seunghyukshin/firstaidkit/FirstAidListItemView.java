@@ -14,7 +14,6 @@ import android.widget.TextView;
 public class FirstAidListItemView extends LinearLayout{
     TextView textView;
     //TextView textView2;
-    BaseActivity ba;
     public FirstAidListItemView(Context context) {
         super(context);
         init(context);
@@ -23,7 +22,6 @@ public class FirstAidListItemView extends LinearLayout{
     public void init(Context context){
         LayoutInflater inflater =  (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.first_aid_list_item,this,true);
-        ba=new BaseActivity();
         textView = (TextView) findViewById(R.id.textView);
         //textView.setTypeface(Typeface.createFromAsset( /*ba.getAssets()*/, "fonts/BMDOHYEON_ttf.ttf"));
         }

@@ -8,8 +8,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,7 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-public class FirstAidListActivity extends AppCompatActivity{
+public class FirstAidListActivity extends AppCompatActivity {
     ListView listView_today_fa; //오늘의 응급상황
     ListView listView_fa;//응급처치법 쭈루룩
     FirstAidAdapter adapter_fa;
@@ -78,8 +80,6 @@ public class FirstAidListActivity extends AppCompatActivity{
                 String name = item.getName();
                 intent.putExtra("NAME",name);
                 startActivity(intent);
-
-
             }
         });
     }
