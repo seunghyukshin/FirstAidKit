@@ -14,8 +14,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="진단 결과 ~ 으로 예상됩니다."
+            android:text="진단 결과"
             android:textSize="30dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="symptom"
+            android:textSize="30dp"
+            android:id="@+id/symptom"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 으로 예상됩니다."
+            android:textSize="30dp"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
