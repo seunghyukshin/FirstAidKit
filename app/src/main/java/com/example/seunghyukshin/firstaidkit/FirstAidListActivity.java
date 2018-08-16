@@ -1,16 +1,12 @@
 package com.example.seunghyukshin.firstaidkit;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 public class FirstAidListActivity extends AppCompatActivity {
@@ -121,12 +116,7 @@ public class FirstAidListActivity extends AppCompatActivity {
 
             FirstAidListItem item = items.get(position);
             view.setName(item.getName());
-            //view.setContent(item.getContents());
 
-//            if (convertView == null) {
-//                view.setTypeface(Typeface.createFromAsset(convertView.getContext().getAssets(), "fonts/NanumBarunGothicBold.ttf"));
-//            }
-//            return convertView;
             return view;
 
         }
