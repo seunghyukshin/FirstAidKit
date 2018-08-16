@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
         protected Long doInBackground(URL... urls) {
 
-            String url = "http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=1159068000";
+            String url = "http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=3020054000";
 
             OkHttpClient client = new OkHttpClient();
 
