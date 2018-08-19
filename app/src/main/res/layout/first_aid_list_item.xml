@@ -4,21 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context="com.example.seunghyukshin.firstaidkit.FirstAidListItem">
 
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp">
-
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:id="@+id/imageView"
+            />
         <TextView
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="newText"
-            android:textSize="20dp"
+            android:textSize="24dp"
             android:id="@+id/textView"
             android:fontFamily="@font/bmdohyeon"
             android:textColor="@android:color/white"

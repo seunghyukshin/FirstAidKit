@@ -26,10 +26,10 @@ public class DiagnosisState extends AppCompatActivity {
         String symptom="";
         for (int i = 0; i < list.length; i++) {
             if (list[0] == 1) {
-                symptom = "머리손상";
+                symptom = "fa_5";
             }
             if (list[1] == 1 || list[2] == 1 || list[3] == 1 || list[4] == 1) {
-                symptom = "열사병";
+                symptom = "fa_12";
             }
         }
         textView_symptom.setText(symptom);
