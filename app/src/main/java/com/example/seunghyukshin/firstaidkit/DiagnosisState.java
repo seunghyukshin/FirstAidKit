@@ -32,12 +32,6 @@ public class DiagnosisState extends AppCompatActivity {
         String symptom = "";
         String Lastline = "으로 예상됩니다.";
         for (int i = 0; i < list.length; i++) {
-            if (list[0] == 1) {
-                symptom = "머리손상";
-            }
-            if (list[1] == 1 || list[2] == 1 || list[3] == 1 || list[4] == 1) {
-                symptom = "열사병";
-            }
             if (list[0] == 1 && list[9] == 1) {
                 symptom = "머리손상";
             } else if (list[14] == 1 && list[15] == 1 && list[0] == 1 || list[9] == 1 && list[1] == 1) {
