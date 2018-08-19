@@ -3,9 +3,6 @@ package com.example.seunghyukshin.firstaidkit;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,33 +37,35 @@ public class FirstAidListActivity extends AppCompatActivity {
         listView_today_fa = (ListView) findViewById(R.id.listView);
         adapter_today_fa = new FirstAidAdapter();
         // 우선순위 알고리즘추가 할것
-        adapter_today_fa.addItem(new FirstAidListItem("열사병"));
-        listView_today_fa.setAdapter(adapter_today_fa);
 
+/*
+        adapter_today_fa.addItem(new FirstAidListItem("fa_12"));
+        listView_today_fa.setAdapter(adapter_today_fa);
+*/
 
         listView_fa = (ListView) findViewById(R.id.listView2);
         //가나다 순으로
         adapter_fa = new FirstAidAdapter();
-        adapter_fa.addItem(new FirstAidListItem("골절"));
-        adapter_fa.addItem(new FirstAidListItem("기도폐쇄"));
-        adapter_fa.addItem(new FirstAidListItem("뇌수막염"));
-        adapter_fa.addItem(new FirstAidListItem("뇌졸중"));
-        adapter_fa.addItem(new FirstAidListItem("당뇨 응급상황"));
-        adapter_fa.addItem(new FirstAidListItem("머리손상"));
-        adapter_fa.addItem(new FirstAidListItem("무의식"));
-        adapter_fa.addItem(new FirstAidListItem("발작/간질"));
-        adapter_fa.addItem(new FirstAidListItem("심리적 응급처치"));
-        adapter_fa.addItem(new FirstAidListItem("심장발작"));
-        adapter_fa.addItem(new FirstAidListItem("쏘임/물림"));
-        adapter_fa.addItem(new FirstAidListItem("알레르기/아나필락시스"));
-        adapter_fa.addItem(new FirstAidListItem("열사병"));
-        adapter_fa.addItem(new FirstAidListItem("저체온증"));
-        adapter_fa.addItem(new FirstAidListItem("정신적 고통"));
-        adapter_fa.addItem(new FirstAidListItem("좌상/염좌"));
-        adapter_fa.addItem(new FirstAidListItem("중독/해로운 물질"));
-        adapter_fa.addItem(new FirstAidListItem("천식발작"));
-        adapter_fa.addItem(new FirstAidListItem("출혈"));
-        adapter_fa.addItem(new FirstAidListItem("화상"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_0,"골절"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_1,"기도폐쇄"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_2,"뇌수막염"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_3,"뇌졸중"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_4,"당뇨 응급상황"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_5,"머리손상"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_6,"무의식"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_7,"발작/간질"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_8,"심리적 응급처치"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_9,"심장발작"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_10,"쏘임/물림"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_11,"알레르기/아나필락시스"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_12,"열사병"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_13,"저체온증"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_14,"정신적 고통"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_15,"좌상/염좌"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_16,"중독/해로운 물질"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_17,"천식발작"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_18,"출혈"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_19,"화상"));
 
         listView_fa.setAdapter(adapter_fa);
 
@@ -111,7 +110,13 @@ public class FirstAidListActivity extends AppCompatActivity {
 
     //가져온 날씨정보로 조건에 맞을시 출력해주도록
     private void setAdapterTodayFA(){
-        //if dataTemp>20 일때 열사병
+        //if dataTemp>20 일때 fa_12
+        if(Double.parseDouble(dataTemp)>=30.0){
+            adapter_today_fa.addItem(new FirstAidListItem(R.drawable.fa_12,"fa_12"));
+        }
+        else if(Integer.parseInt(dataPop)>=50){
+            adapter_today_fa.addItem(new FirstAidListItem(R.drawable.fa_13,"fa_13"));
+        }
         /*
         dataTemp
         dataPop;
@@ -119,7 +124,6 @@ public class FirstAidListActivity extends AppCompatActivity {
         dataWfKor;*/
 
 
-        adapter_today_fa.addItem(new FirstAidListItem(dataTemp+dataPop+dataReh+dataWfKor));
         listView_today_fa.setAdapter(adapter_today_fa);
     }
 
@@ -160,7 +164,7 @@ public class FirstAidListActivity extends AppCompatActivity {
 
             FirstAidListItem item = items.get(position);
             view.setName(item.getName());
-
+            view.setImage(item.getImage());
             return view;
 
         }

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, FirstAidListActivity.class);
                 intent.putExtra("기온",dataTemp);
-                intent.putExtra("강수 확률",dataPop);
+                intent.putExtra("강수확률",dataPop);
                 intent.putExtra("습도",dataReh);
                 intent.putExtra("구름",dataWfKor);
                 startActivity(intent);

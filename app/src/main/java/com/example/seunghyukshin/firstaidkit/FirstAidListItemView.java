@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 public class FirstAidListItemView extends LinearLayout{
     TextView textView;
+    ImageView imageView;
     //TextView textView2;
     public FirstAidListItemView(Context context) {
         super(context);
@@ -23,11 +25,15 @@ public class FirstAidListItemView extends LinearLayout{
         LayoutInflater inflater =  (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.first_aid_list_item,this,true);
         textView = (TextView) findViewById(R.id.textView);
+        imageView= (ImageView) findViewById(R.id.imageView);
         //textView.setTypeface(Typeface.createFromAsset( /*ba.getAssets()*/, "fonts/BMDOHYEON_ttf.ttf"));
         }
 
     public void setName(String name){
         textView.setText(name);
+    }
+    public void setImage(int image){
+        imageView.setImageResource(image);
     }
     /*
     public void setContent(String content){
