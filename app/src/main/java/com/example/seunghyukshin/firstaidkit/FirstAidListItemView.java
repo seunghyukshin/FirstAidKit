@@ -27,7 +27,7 @@ public class FirstAidListItemView extends LinearLayout{
         textView = (TextView) findViewById(R.id.textView);
         imageView= (ImageView) findViewById(R.id.imageView);
         //textView.setTypeface(Typeface.createFromAsset( /*ba.getAssets()*/, "fonts/BMDOHYEON_ttf.ttf"));
-        }
+    }
 
     public void setName(String name){
         textView.setText(name);
