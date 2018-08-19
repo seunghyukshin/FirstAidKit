@@ -3,6 +3,8 @@ package com.example.seunghyukshin.firstaidkit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,6 +12,7 @@ public class DiagnosisState extends AppCompatActivity {
 
     TextView textView_symptom;
     TextView lastline;
+    Button button_go_to_home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,7 @@ public class DiagnosisState extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), list[0] + ", " + list[1] + ", " + list[2], Toast.LENGTH_SHORT).show();
 
+        button_go_to_home = (Button) findViewById(R.id.Gotohome);
         textView_symptom = (TextView) findViewById(R.id.symptom);
         lastline = (TextView) findViewById(R.id.last_text);
 
@@ -55,5 +59,13 @@ public class DiagnosisState extends AppCompatActivity {
         }
         textView_symptom.setText(symptom);
         lastline.setText(Lastline);
+
+        button_go_to_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DiagnosisState.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
