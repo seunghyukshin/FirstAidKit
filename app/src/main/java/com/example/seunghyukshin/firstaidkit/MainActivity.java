@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 액션바 설정
         getSupportActionBar().setTitle("MainActivity");
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF339999));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF5882FA));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 

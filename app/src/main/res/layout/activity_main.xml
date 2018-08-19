@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="#A9D0F5">
     <android.support.constraint.ConstraintLayout
-        android:layout_margin="4dp"
+        android:layout_margin="8dp"
         android:background="@drawable/my_button_3"
         android:layout_weight="1"
         android:layout_width="match_parent"
