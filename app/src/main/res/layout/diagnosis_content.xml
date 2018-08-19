@@ -10,16 +10,23 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="348dp"
-            android:layout_height="wrap_content"
-            android:text="diagnosis1"
-            android:textSize="23dp"
-            android:id="@+id/textView"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="diagnosis1"
+                android:textSize="23dp"
+                android:id="@+id/textView"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
         <CheckBox
             android:id="@+id/Cbox"
             android:layout_width="wrap_content"
