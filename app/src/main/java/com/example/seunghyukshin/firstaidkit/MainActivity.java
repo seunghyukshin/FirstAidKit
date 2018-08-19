@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView textView_shortWeather;
     TextView helper;
+
+    ImageView weather_background;
 
     private String dataTemp;
     private String dataPop;
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        weather_background = findViewById(R.id.weather_background);
         textView_shortWeather = (TextView)findViewById(R.id.shortWeather);
         helper = findViewById(R.id.helper);
 
@@ -268,20 +272,20 @@ public class MainActivity extends AppCompatActivity {
 
             String sky = shortWeathers.get(0).getWfKor();
             if(sky == "맑음"){
-                textView_shortWeather.setBackgroundResource(R.drawable.sunny);
+                weather_background.setBackgroundResource(R.drawable.sunny);
             }
             else if(sky == "구름 조금"){
-                textView_shortWeather.setBackgroundResource(R.drawable.s_cloud);
+                weather_background.setBackgroundResource(R.drawable.s_cloud);
             }
             else if(sky == "구름 많음" || sky == "흐림"){
-                textView_shortWeather.setBackgroundResource(R.drawable.m_cloud);
+                weather_background.setBackgroundResource(R.drawable.m_cloud);
             }
             else{
-                textView_shortWeather.setBackgroundResource(R.drawable.sunny);
+                weather_background.setBackgroundResource(R.drawable.sunny);
             }
 
             if (shortWeathers.get(0).getPty() == "1"){
-                textView_shortWeather.setBackgroundResource(R.drawable.rain);
+                weather_background.setBackgroundResource(R.drawable.rain);
             }
             helper.setText(info);
         }
