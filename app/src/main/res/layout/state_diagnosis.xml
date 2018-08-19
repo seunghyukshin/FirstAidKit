@@ -29,6 +29,14 @@
             android:text="으로 예상됩니다."
             android:textSize="30dp"
             android:id="@+id/last_text"/>
+        <Button
+            android:id="@+id/Gotohome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:gravity="center"
+            android:text="돌아가기"
+            android:textSize="16dp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
