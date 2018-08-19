@@ -31,15 +31,23 @@ public class DiagnosisActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_view);
         adapter = new DiagnosisAdapter();
 
-        adapter.addItem(new DiagnosisContent("두통이 있다.",false));
-        adapter.addItem(new DiagnosisContent("구토증세가 있다.",false));
-        adapter.addItem(new DiagnosisContent("열이 많이난다.",false));
-        adapter.addItem(new DiagnosisContent("무력감이 있다.",false));
-        adapter.addItem(new DiagnosisContent("근육떨림 증세가 있다.",false));
-        adapter.addItem(new DiagnosisContent("심장을 쥐어짜는 통증이 있다.",false));
-        adapter.addItem(new DiagnosisContent("오한이 느껴진다.",false));
-        adapter.addItem(new DiagnosisContent("피부가 건조해 불편함이 느껴진다.",false));
-        adapter.addItem(new DiagnosisContent("피부가 창백하다.",false));
+        adapter.addItem(new DiagnosisContent("두통이 있다.",false));//0
+        adapter.addItem(new DiagnosisContent("구토증세가 있다.",false));//1
+        adapter.addItem(new DiagnosisContent("열이 많이난다.",false));//2
+        adapter.addItem(new DiagnosisContent("무력감이 있다.",false));//3
+        adapter.addItem(new DiagnosisContent("근육떨림 증세가 있다.",false));//4
+        adapter.addItem(new DiagnosisContent("심장을 쥐어짜는 통증이 있다.",false));//5
+        adapter.addItem(new DiagnosisContent("오한이 느껴진다.",false));//6
+        adapter.addItem(new DiagnosisContent("피부가 건조해 불편함이 느껴진다.",false));//7
+        adapter.addItem(new DiagnosisContent("피부가 창백하다.",false));//8
+        adapter.addItem(new DiagnosisContent("어지럼증이 있다.", false));//9
+        adapter.addItem(new DiagnosisContent("편측마비증상(한쪽 팔다리 혹은 얼굴부분 마비증상)이 있다.", false));//10
+        adapter.addItem(new DiagnosisContent("언어장애(실어증; 말을 잘 이해하지 못하거나 표현하는 것이 어려운 장애)가 있다.", false));//11
+        adapter.addItem(new DiagnosisContent("시각장애(눈이 나빠졌거나 물체가 두개로 보이는 복시현상)가 있다.", false));//12
+        adapter.addItem(new DiagnosisContent("가슴이 답답하거나 아프다.", false));//13
+        adapter.addItem(new DiagnosisContent("코가 막히거나 콧물이 난다.", false));//14
+        adapter.addItem(new DiagnosisContent("피부에 두드러기나 홍조가 생겼다.", false));//15
+
         
         listView.setAdapter(adapter);
 
