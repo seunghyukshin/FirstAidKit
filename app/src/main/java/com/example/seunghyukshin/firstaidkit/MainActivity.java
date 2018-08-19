@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private String dataReh;
     private String dataWfKor;
 
+    private String weather_data = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         new ReceiveShortWeather().execute();
+        new ReceiveFineDust().execute();
     }
 
     //액션버튼 메뉴 액션바에 집어 넣기
@@ -107,6 +110,117 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public class ReceiveFineDust extends AsyncTask<URL, Integer, Long>{
+        String pm10 = "";
+        String pm25 = "";
+        String pm10value = "";
+        String pm25value = "";
+
+        protected Long doInBackground(URL... urls){
+            String service_key = "tuRZOtYGn%2FJEHn9eJqUvaSv9zB5c2%2F53MTDYHIlNdaL%2BKenmHNrGc2ofsIsEytSgVs%2BZLhpkqlVsXsru%2BrfN6Q%3D%3D";
+
+            String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?stationName="
+                    + "종로구"
+                    + "&dataTerm=daily"
+                    + "&pageNo=1&numOfRows=10&ServiceKey="
+                    + service_key + "&ver=1.3";
+
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            Response response = null;
+
+            try {
+                response = client.newCall(request).execute();
+                parseXML(response.body().string());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(Long result) {
+            String gradePm10 = getGrade(pm10);
+            String gradePm25 = getGrade(pm25);
+
+            String text = weather_data +
+                    String.format("%s  %s\n","미세먼지",pm10value+"㎍/㎥ / "+gradePm10)+
+                    String.format("%s  %s","초미세먼지",pm25value+"㎍/㎥ / "+gradePm25);
+
+            textView_shortWeather.setText(text);
+        }
+
+        String getGrade(String pm){
+            if(pm.equals("1")){
+                return "좋음";
+            }
+            else if(pm.equals("2")){
+                return "보통";
+            }
+            else if(pm.equals("3")){
+                return "나쁨";
+            }
+            else if(pm.equals("4")){
+                return "매우 나쁨";
+            }
+            return pm;
+        }
+        void parseXML(String xml) {
+            try {
+                String tagName = "";
+
+                boolean onPm10 = true;
+                boolean onPm25 = true;
+                boolean onPm10value = true;
+                boolean onPm25value = true;
+
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                XmlPullParser parser = factory.newPullParser();
+
+                parser.setInput(new StringReader(xml));
+
+                int eventType = parser.getEventType();
+
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+                    if (eventType == XmlPullParser.START_TAG) {
+                        tagName = parser.getName();
+                        Log.i("FINE DUST TAG NAME :", tagName);
+                    }
+                    else if (eventType == XmlPullParser.TEXT) {
+                        if (tagName.equals("pm10Grade1h") && onPm10) {
+                            pm10 = parser.getText();
+                            onPm10 = false;
+                        }
+                        if (tagName.equals("pm25Grade1h") && onPm25) {
+                            pm25 = parser.getText();
+                            onPm25 = false;
+                        }
+                        if (tagName.equals("pm10Value") && onPm10value) {
+                            pm10value = parser.getText();
+                            onPm10value = false;
+                        }
+                        if (tagName.equals("pm25Value") && onPm25value) {
+                            pm25value = parser.getText();
+                            onPm25value = false;
+                        }
+                    } else if (eventType == XmlPullParser.END_TAG) {
+                        if (tagName.equals("item") && onPm10 == false && onPm25 == false && onPm10value == false && onPm25value == false) {
+                            break;
+                        }
+                    }
+
+                    eventType = parser.next();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public class ReceiveShortWeather extends AsyncTask<URL, Integer, Long> {
 
         ArrayList<ShortWeather> shortWeathers = new ArrayList<ShortWeather>();
@@ -196,11 +310,10 @@ public class MainActivity extends AppCompatActivity {
                     String.format("%20s  %10s\n","강수 확률",shortWeathers.get(0).getPop() + "%")+
                     String.format("%20s  %10s\n","습도",shortWeathers.get(0).getReh() + "%")+
                     String.format("%20s  %10s\n","구름",shortWeathers.get(0).getWfKor())+
-                    String.format("%20s  %10s\n","강수상태",rain)+
-                    String.format("%20s  %10s\n","미세먼지","")+
-                    String.format("%20s  %10s","초미세먼지","");
+                    String.format("%20s  %10s\n","강수상태",rain);
 
-            textView_shortWeather.setText(data);
+            weather_data = data;
+//            textView_shortWeather.setText(data);
         }
         //intent넘어갈때 넘겨줄 날씨정보
         void setWeatherData(){
@@ -233,6 +346,7 @@ public class MainActivity extends AppCompatActivity {
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     if (eventType == XmlPullParser.START_TAG) {
                         tagName = parser.getName();
+                        Log.i("WEATHER TAG NAME :", tagName);
                         if (tagName.equals("data")) {
                             shortWeathers.add(new ShortWeather());
                             onEnd = false;
