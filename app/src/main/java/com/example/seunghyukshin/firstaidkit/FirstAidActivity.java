@@ -46,26 +46,26 @@ public class FirstAidActivity extends AppCompatActivity {
 
 
     private void setFirstAidMap(){
-        firstAidMap.put("fa_0","뼈가 부러지셧다고요? 119에 전화하세요!");
-        firstAidMap.put("fa_1","기도가 막히셨다고요?");
-        firstAidMap.put("fa_2","");
-        firstAidMap.put("fa_3","");
-        firstAidMap.put("fa_4 응급상황","");
-        firstAidMap.put("fa_5","");
-        firstAidMap.put("fa_6","");
+        firstAidMap.put("골절","뼈가 부러지셧다고요? 119에 전화하세요!");
+        firstAidMap.put("기도폐쇄","기도가 막히셨다고요?");
+        firstAidMap.put("뇌수막염","");
+        firstAidMap.put("뇌졸중","");
+        firstAidMap.put("당뇨 응급상황","");
+        firstAidMap.put("머리손상","");
+        firstAidMap.put("무의식","");
         firstAidMap.put("발작/간질","");
         firstAidMap.put("심리적 응급처치","");
-        firstAidMap.put("fa_9","");
+        firstAidMap.put("심장발작","");
         firstAidMap.put("쏘임/물림","");
         firstAidMap.put("알레르기/아나필락시스","");
-        firstAidMap.put("fa_12","");
-        firstAidMap.put("fa_13","");
+        firstAidMap.put("열사병","");
+        firstAidMap.put("저체온증","");
         firstAidMap.put("정신적 고통","");
         firstAidMap.put("좌상/염좌","");
         firstAidMap.put("중독/해로운 물질","");
         firstAidMap.put("천식발작","");
-        firstAidMap.put("fa_18","");
-        firstAidMap.put("fa_19","");
+        firstAidMap.put("출혈","");
+        firstAidMap.put("화상","");
     }
 
 }

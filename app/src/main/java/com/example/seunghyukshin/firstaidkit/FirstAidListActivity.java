@@ -112,10 +112,10 @@ public class FirstAidListActivity extends AppCompatActivity {
     private void setAdapterTodayFA(){
         //if dataTemp>20 일때 fa_12
         if(Double.parseDouble(dataTemp)>=30.0){
-            adapter_today_fa.addItem(new FirstAidListItem(R.drawable.fa_12,"fa_12"));
+            adapter_today_fa.addItem(new FirstAidListItem(R.drawable.fa_12,"열사병"));
         }
         else if(Integer.parseInt(dataPop)>=50){
-            adapter_today_fa.addItem(new FirstAidListItem(R.drawable.fa_13,"fa_13"));
+            adapter_today_fa.addItem(new FirstAidListItem(R.drawable.fa_13,"저체온증"));
         }
         /*
         dataTemp
