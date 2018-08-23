@@ -21,7 +21,7 @@ public class DiagnosisActivity extends AppCompatActivity {
     ListView listView;
     DiagnosisAdapter adapter;
     Button button_complete;
-
+    Button button_cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +29,8 @@ public class DiagnosisActivity extends AppCompatActivity {
         setContentView(R.layout.activity_diagnosis);
 
         button_complete = (Button) findViewById(R.id.button_complete);
+        button_cancel = findViewById(R.id.button_diagnosis_cancel);
+
         listView = (ListView) findViewById(R.id.list_view);
         adapter = new DiagnosisAdapter();
 
@@ -67,7 +69,15 @@ public class DiagnosisActivity extends AppCompatActivity {
             intent.putExtra("list", adapter.getList());
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
         }
+        });
+        button_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
         });
     }
 

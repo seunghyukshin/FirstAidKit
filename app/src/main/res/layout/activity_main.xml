@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:id="@+id/tmp"
-            android:textColor="#FFF"
+            android:textColor="#A9D0F5"
             android:textSize="50dp"
             android:fontFamily="@font/bmdohyeon"
             android:text="35℃"/>
@@ -181,7 +181,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:textColor="#FFF"
+                    android:textColor="#A9D0F5"
                     android:gravity="center"
                     android:id="@+id/helper"
                     android:fontFamily="@font/bmdohyeon"
