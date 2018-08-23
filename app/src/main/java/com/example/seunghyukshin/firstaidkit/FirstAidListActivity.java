@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -20,6 +21,7 @@ public class FirstAidListActivity extends AppCompatActivity {
     FirstAidAdapter adapter_today_fa;
     LinearLayout layout_fa;
 
+    Button button_first_aid_cancel;
 
     String dataTemp;
     String dataPop;
@@ -32,7 +34,7 @@ public class FirstAidListActivity extends AppCompatActivity {
 
         //배경화면색
         layout_fa = (LinearLayout) findViewById(R.id.FirstAidListLayout);
-        layout_fa.setBackgroundColor(Color.rgb(200,191,231));
+//        layout_fa.setBackgroundColor(Color.rgb(200,191,231));
 
         listView_today_fa = (ListView) findViewById(R.id.listView);
         adapter_today_fa = new FirstAidAdapter();
@@ -43,6 +45,14 @@ public class FirstAidListActivity extends AppCompatActivity {
         listView_today_fa.setAdapter(adapter_today_fa);
 */
 
+        button_first_aid_cancel = findViewById(R.id.button_first_aid_cancel);
+        button_first_aid_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
         listView_fa = (ListView) findViewById(R.id.listView2);
         //가나다 순으로
         adapter_fa = new FirstAidAdapter();
@@ -79,6 +89,7 @@ public class FirstAidListActivity extends AppCompatActivity {
                 String name = item.getName();
                 intent.putExtra("NAME",name);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 

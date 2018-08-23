@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,9 @@ import java.util.List;
 public class FirstAidActivity extends AppCompatActivity {
     TextView TextView_name;
     TextView TextView_contents;
+    Button first_aid_re_list;
+    Button first_aid_gotohome;
+
     HashMap<String,String> firstAidMap = new HashMap<>();
 
     @Override
@@ -29,6 +34,26 @@ public class FirstAidActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first_aid);
         TextView_name = (TextView) findViewById(R.id.NameText);
         TextView_contents = (TextView) findViewById(R.id.ContentsText);
+
+        first_aid_re_list = findViewById(R.id.first_aid_re_list);
+        first_aid_gotohome = findViewById(R.id.first_aid_gotohome);
+
+        first_aid_re_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+        first_aid_gotohome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FirstAidActivity.this, MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
+        });
         String name;
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
