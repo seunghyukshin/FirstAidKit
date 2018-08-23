@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,14 +25,25 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.StringReader;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     Button button_diag;
     Button button_fa;
 
-    TextView textView_shortWeather;
+//    TextView textView_shortWeather;
     TextView helper;
+
+    TextView tmp;
+
+    TextView textView_pop;
+    TextView textView_reh;
+    TextView textView_pm10;
+    TextView textView_pm25;
+
+    TextView textView_date;
 
     ImageView weather_background;
 
@@ -45,14 +57,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
 
 
         // 액션바 설정
         getSupportActionBar().setTitle("MainActivity");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF5882FA));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        tmp = findViewById(R.id.tmp);
+
+        textView_pop = findViewById(R.id.pop);
+        textView_reh = findViewById(R.id.reh);
+        textView_pm10 = findViewById(R.id.pm10);
+        textView_pm25 = findViewById(R.id.pm25);
+
+        textView_date = findViewById(R.id.date);
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        String[] day = {"월요일","화요일","수요일","목요일","금요일","토요일","일요일"};
+        textView_date.setText((date.getMonth()+1)+"월 " + date.getDate() + "일 " + day[date.getDay()]);
 
         button_diag = (Button) findViewById(R.id.button_diagnosis);
         button_fa = (Button) findViewById(R.id.button_first_aid);
@@ -78,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         weather_background = findViewById(R.id.weather_background);
-        textView_shortWeather = (TextView)findViewById(R.id.shortWeather);
         helper = findViewById(R.id.helper);
 
 
@@ -113,12 +139,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    String pm10 = "";
+    String pm25 = "";
+    String pm10value = "";
+    String pm25value = "";
+    String gradePm10 = "";
+    String gradePm25 = "";
     public class ReceiveFineDust extends AsyncTask<URL, Integer, Long>{
-        String pm10 = "";
-        String pm25 = "";
-        String pm10value = "";
-        String pm25value = "";
+
 
         protected Long doInBackground(URL... urls){
             String service_key = "tuRZOtYGn%2FJEHn9eJqUvaSv9zB5c2%2F53MTDYHIlNdaL%2BKenmHNrGc2ofsIsEytSgVs%2BZLhpkqlVsXsru%2BrfN6Q%3D%3D";
@@ -148,14 +176,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Long result) {
-            String gradePm10 = getGrade(pm10);
-            String gradePm25 = getGrade(pm25);
+            gradePm10 = getGrade(pm10);
+            gradePm25 = getGrade(pm25);
 
-            String text = weather_data +
-                    String.format("%s  %s\n","미세먼지",pm10value+"㎍/㎥ / "+gradePm10)+
-                    String.format("%s  %s","초미세먼지",pm25value+"㎍/㎥ / "+gradePm25);
+//            String text = weather_data +
+//                    String.format("%s  %s\n","미세먼지",pm10value+"㎍/㎥ / "+gradePm10)+
+//                    String.format("%s  %s","초미세먼지",pm25value+"㎍/㎥ / "+gradePm25);
+//
+//            textView_shortWeather.setText(text);
 
-            textView_shortWeather.setText(text);
+            textView_pm10.setText(pm10value+"㎍/㎥\n"+gradePm10);
+            textView_pm25.setText(pm25value+"㎍/㎥\n"+gradePm25);
         }
 
         String getGrade(String pm){
@@ -260,65 +291,80 @@ public class MainActivity extends AppCompatActivity {
         void setShowSky(){
             String info = "";
             if(Double.parseDouble(shortWeathers.get(0).getTemp()) >= 40){
-                info += "날이 매우 덥습니다. 열사병을 조심하세요.\n";
+                if (shortWeathers.get(0).getWfKor().contains("구름")){
+
+                }
+                else{
+                    info += "날이 매우 덥습니다. 열사병을 조심하세요.";
+                }
             }
-            else if(Integer.parseInt(shortWeathers.get(0).getPop()) >= 50){
-                info += "비 올 확률이 높아요! 우산을 챙겨주세요.\n";
-            }
-            else{
-                info += "놀러나가기 좋은 날씨네요!\n";
+            if(gradePm10.contains("나쁨") || gradePm25.contains("나쁨")){
+                info += "미세 먼지가 많습니다! 마스크 꼭 사용하세요.";
             }
 
+            if(Integer.parseInt(shortWeathers.get(0).getPop()) >= 50){
+                if (shortWeathers.get(0).getWfKor().equals("비")){
+                    info += "비가 오고 있어요! 우산을 챙겨주세요.";
+                }
+                else if(shortWeathers.get(0).getWfKor().equals("눈")){
+                    info += "길이 미끄러울 수 있어요! 조심하세요.";
+                }
+                else{
+                    info += "비 올 확률이 높아요! 우산을 챙겨주세요.";
+                }
+            }
+
+            if(shortWeathers.get(0).getWfKor().equals("맑음") && !gradePm10.contains("나쁨") && !gradePm25.contains("나쁨")){
+                info += "놀러나가기 좋은 날씨네요!";
+            }
+
+
+            long now = System.currentTimeMillis();
+            Date date = new Date(now);
 
             String sky = shortWeathers.get(0).getWfKor();
-            if(sky == "맑음"){
-                weather_background.setBackgroundResource(R.drawable.sunny);
+            if(sky.equals("맑음")){
+                  if(date.getHours() <= 7 ||20 <= date.getHours()){
+                      weather_background.setImageResource(R.drawable.moon_1);
+                  }
+                  else{
+                      weather_background.setImageResource(R.drawable.sunny_1);
+                  }
             }
-            else if(sky == "구름 조금"){
-                weather_background.setBackgroundResource(R.drawable.s_cloud);
+            else if(sky.equals("구름 조금")){
+                weather_background.setImageResource(R.drawable.s_cloud_1);
             }
-            else if(sky == "구름 많음" || sky == "흐림"){
-                weather_background.setBackgroundResource(R.drawable.m_cloud);
+            else if(sky.equals("구름 많음") || sky.equals("흐림")){
+                weather_background.setImageResource(R.drawable.m_cloud_1);
+            }
+            else if(sky.equals("비") || sky.equals("눈/비")){
+                weather_background.setImageResource(R.drawable.rain_1);
+            }
+            else if(sky.equals("눈")){
+                weather_background.setImageResource(R.drawable.snow_1);
             }
             else{
-                weather_background.setBackgroundResource(R.drawable.sunny);
+                weather_background.setImageResource(R.drawable.sunny_1);
             }
 
             if (shortWeathers.get(0).getPty() == "1"){
-                weather_background.setBackgroundResource(R.drawable.rain);
+                weather_background.setImageResource(R.drawable.rain_1);
             }
             helper.setText(info);
         }
 
         void setWeather(){
             String data;
-            String rain;
+            tmp.setText(shortWeathers.get(0).getTemp() + "℃");
+            textView_pop.setText((shortWeathers.get(0).getWfKor().equals("비") ? "비 오는 중" : shortWeathers.get(0).getPop() + "%"));
+            textView_reh.setText(shortWeathers.get(0).getReh() + "%");
 
-            if (shortWeathers.get(0).getPty() == "0"){
-                rain = "없음";
-            }
-            else if(shortWeathers.get(0).getPty() == "1"){
-                rain = "비";
-            }
-            else if(shortWeathers.get(0).getPty() == "2"){
-                rain = "비/눈";
-            }
-            else if(shortWeathers.get(0).getPty() == "3"){
-                rain = "눈";
-            }
-            else{
-                rain = "없음";
-            }
-
-            data = String.format("%20s  %10s도\n","기온",shortWeathers.get(0).getTemp())+
-                    String.format("%20s  %10s\n","강수 확률",shortWeathers.get(0).getPop() + "%")+
-                    String.format("%20s  %10s\n","습도",shortWeathers.get(0).getReh() + "%")+
-                    String.format("%20s  %10s\n","구름",shortWeathers.get(0).getWfKor())+
-                    String.format("%20s  %10s\n","강수상태",rain);
-
-            weather_data = data;
-//            textView_shortWeather.setText(data);
+//            data =  String.format("%20s  %10s\n","강수 확률",shortWeathers.get(0).getWfKor().equals("비") ? "비 오는 중" : shortWeathers.get(0).getPop() + "%")+
+//                    String.format("%20s  %10s\n","습도",shortWeathers.get(0).getReh() + "%");
+//
+//            weather_data = data;
         }
+
         //intent넘어갈때 넘겨줄 날씨정보
         void setWeatherData(){
             dataTemp = shortWeathers.get(0).getTemp();
