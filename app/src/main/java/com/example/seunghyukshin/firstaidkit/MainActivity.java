@@ -67,12 +67,8 @@ public class MainActivity extends AppCompatActivity {
         // 액션바 설정
         getSupportActionBar().setTitle("MainActivity");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF5882FA));
-<<<<<<< HEAD
 
         tmp = findViewById(R.id.tmp);
-=======
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
->>>>>>> 0031fca52fb4756c26c10f4ec86dc5b1ee79f3b3
 
         textView_pop = findViewById(R.id.pop);
         textView_reh = findViewById(R.id.reh);

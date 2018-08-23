@@ -9,10 +9,7 @@
     android:background="#A9D0F5">
     <android.support.constraint.ConstraintLayout
         android:layout_margin="8dp"
-<<<<<<< HEAD
-=======
         android:background="@drawable/my_button_3"
->>>>>>> 0031fca52fb4756c26c10f4ec86dc5b1ee79f3b3
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

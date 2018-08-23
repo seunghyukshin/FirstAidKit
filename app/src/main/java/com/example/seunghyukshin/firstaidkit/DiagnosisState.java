@@ -5,10 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-<<<<<<< HEAD
-=======
-import android.widget.ImageView;
->>>>>>> 0031fca52fb4756c26c10f4ec86dc5b1ee79f3b3
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +13,7 @@ public class DiagnosisState extends AppCompatActivity {
     TextView textView_symptom;
     TextView lastline;
     Button button_go_to_home;
-<<<<<<< HEAD
-
-=======
     ImageView imageView_symptom;
->>>>>>> 0031fca52fb4756c26c10f4ec86dc5b1ee79f3b3
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
