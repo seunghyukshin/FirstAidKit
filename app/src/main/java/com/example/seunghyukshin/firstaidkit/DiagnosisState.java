@@ -15,6 +15,8 @@ public class DiagnosisState extends AppCompatActivity {
     TextView textView_symptom;
     TextView lastline;
     Button button_go_to_home;
+    Button button_re_diagnosis;
+
     ImageView imageView_symptom;
 
     LinearLayout no_symtom;
@@ -32,6 +34,8 @@ public class DiagnosisState extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), list[0] + ", " + list[1] + ", " + list[2], Toast.LENGTH_SHORT).show();
 
         button_go_to_home = (Button) findViewById(R.id.Gotohome);
+        button_re_diagnosis = findViewById(R.id.button_re_diagnosis);
+
         textView_symptom = (TextView) findViewById(R.id.symptom);
         lastline = (TextView) findViewById(R.id.last_text);
         imageView_symptom=(ImageView) findViewById(R.id.symptomImage);
@@ -90,6 +94,16 @@ public class DiagnosisState extends AppCompatActivity {
                 Intent intent = new Intent(DiagnosisState.this, MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
+        });
+
+        button_re_diagnosis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DiagnosisState.this, DiagnosisActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();
             }
         });

@@ -46,20 +46,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <Button
+        <LinearLayout
             android:layout_gravity="right|center_vertical"
-
-            android:textColor="#A9F5E1"
-            android:fontFamily="@font/bmdohyeon"
-
-            android:background="@drawable/dia_button"
-            android:id="@+id/button_complete"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:text="진단하기"
-            android:textSize="16dp" />
+            android:layout_height="wrap_content">
+            <Button
+                android:textColor="#A9F5E1"
+                android:layout_margin="12dp"
+                android:background="@drawable/dia_button"
+
+                android:textSize="16dp"
+                android:fontFamily="@font/bmdohyeon"
+                android:id="@+id/button_diagnosis_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="돌아가기" />
+
+            <Button
+                android:layout_gravity="right|center_vertical"
+
+                android:textColor="#A9F5E1"
+                android:fontFamily="@font/bmdohyeon"
+
+                android:background="@drawable/dia_button"
+                android:id="@+id/button_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:text="진단하기"
+                android:textSize="16dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
