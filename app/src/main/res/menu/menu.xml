@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item
-        android:title="설정"
-        android:icon="@drawable/white_setting_icon"
         android:id="@+id/action_setting"
+        android:icon="@drawable/white_setting_icon"
+        android:title="설정"
         app:showAsAction="always" />
 </menu>
