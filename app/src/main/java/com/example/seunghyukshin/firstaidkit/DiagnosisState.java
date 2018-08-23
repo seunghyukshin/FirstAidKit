@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,10 @@ public class DiagnosisState extends AppCompatActivity {
     TextView lastline;
     Button button_go_to_home;
     ImageView imageView_symptom;
+
+    LinearLayout no_symtom;
+    LinearLayout has_symtom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,10 @@ public class DiagnosisState extends AppCompatActivity {
         lastline = (TextView) findViewById(R.id.last_text);
         imageView_symptom=(ImageView) findViewById(R.id.symptomImage);
         imageView_symptom.setImageResource(R.drawable.stethoscope);
+
+        no_symtom = findViewById(R.id.no_symtom);
+        has_symtom = findViewById(R.id.has_symtom);
+
         String symptom = "";
         String Lastline = "으로 예상됩니다.";
         for (int i = 0; i < list.length; i++) {
@@ -64,7 +73,11 @@ public class DiagnosisState extends AppCompatActivity {
                 symptom = "심장질환";
                 imageView_symptom.setImageResource(R.drawable.fa_9);
             } else {
-                symptom = "증상을 알 수 없습니다! 가까운 병원을 방문해주세요.";
+                has_symtom.setVisibility(View.GONE);
+                no_symtom.setVisibility(View.VISIBLE);
+
+//                symptom = "증상을 알 수 없습니다!\n가까운 병원을 방문해주세요.";
+                symptom = "";
                 Lastline = "";
             }
         }
@@ -76,6 +89,8 @@ public class DiagnosisState extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(DiagnosisState.this, MainActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
             }
         });
     }

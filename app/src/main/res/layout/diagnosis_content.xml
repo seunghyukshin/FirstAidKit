@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.seunghyukshin.firstaidkit.DiagnosisContent">
     <LinearLayout
+        android:padding="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -19,7 +20,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="diagnosis1"
-                android:textSize="23dp"
+                android:textSize="15dp"
+                android:fontFamily="@font/bmdohyeon"
+                android:textColor="#FFF"
                 android:id="@+id/textView"/>
             <View
                 android:layout_width="0dp"
@@ -28,6 +31,7 @@
         </LinearLayout>
 
         <CheckBox
+            android:textColor="#FFF"
             android:id="@+id/Cbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

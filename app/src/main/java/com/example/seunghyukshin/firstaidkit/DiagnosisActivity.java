@@ -14,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class DiagnosisActivity extends AppCompatActivity {
@@ -65,9 +66,11 @@ public class DiagnosisActivity extends AppCompatActivity {
 
             intent.putExtra("list", adapter.getList());
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
         });
     }
+
 
     class DiagnosisAdapter extends BaseAdapter {
         ArrayList<DiagnosisContent> items = new ArrayList<DiagnosisContent>();
