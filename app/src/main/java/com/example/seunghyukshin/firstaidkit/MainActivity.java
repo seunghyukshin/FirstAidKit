@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         // 액션바 설정
-        getSupportActionBar().setTitle("MainActivity");
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF5882FA));
+//        getSupportActionBar().setTitle("MainActivity");
+//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF5882FA));
 
         tmp = findViewById(R.id.tmp);
 
@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, DiagnosisActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
 
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("습도",dataReh);
                 intent.putExtra("구름",dataWfKor);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
