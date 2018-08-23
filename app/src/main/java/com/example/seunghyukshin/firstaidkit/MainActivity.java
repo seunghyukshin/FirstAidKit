@@ -110,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
         helper = findViewById(R.id.helper);
 
 
-
         new ReceiveShortWeather().execute();
         new ReceiveFineDust().execute();
     }
