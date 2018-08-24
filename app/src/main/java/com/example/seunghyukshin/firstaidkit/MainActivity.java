@@ -1,12 +1,14 @@
 package com.example.seunghyukshin.firstaidkit;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     Button button_diag;
     Button button_fa;
 
-//    TextView textView_shortWeather;
     TextView helper;
 
     TextView tmp;
@@ -47,8 +49,11 @@ public class MainActivity extends AppCompatActivity {
     TextView textView_pm25;
 
     TextView textView_date;
+    TextView textView_place;
 
     ImageView weather_background;
+
+    ImageButton setting;
 
     private String dataTemp;
     private String dataPop;
@@ -56,6 +61,18 @@ public class MainActivity extends AppCompatActivity {
     private String dataWfKor;
 
     private String weather_data = "";
+
+    public String[] zone_list = {"종로구", "중구", "용산구","성동구","광진구","동대문구", "중랑구",
+                            "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구","양천구"
+    ,"강서구", "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구", "강동구"};
+
+    public String[] zone_XY = {"60.127", "60.127", "60.126", "61.127", "62.126","62.126", "61.127", "62.128",
+            "61.127", "61.128", "61.129", "61.129", "59.127", "59.127", "59.127", "58.126",
+            "58.126", "58.125", "59.124", "58.126", "59.125", "59.125", "61.125", "61.126", "62.126", "62.126"};
+
+    public String[] zone_number = {"11110", "11140", "11170", "11200", "11215", "11230", "11260",
+    "11290", "11305", "11320", "11350", "11410", "11440", "11470", "11500", "11530", "11545", "11560",
+    "11590", "11620", "11650", "11680", "11710", "11740"};
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -70,11 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-
-        // 액션바 설정
-//        getSupportActionBar().setTitle("MainActivity");
-//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF5882FA));
-
         tmp = findViewById(R.id.tmp);
 
         textView_pop = findViewById(R.id.pop);
@@ -82,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         textView_pm10 = findViewById(R.id.pm10);
         textView_pm25 = findViewById(R.id.pm25);
 
+        textView_place = findViewById(R.id.place);
         textView_date = findViewById(R.id.date);
         long now = System.currentTimeMillis();
         Date date = new Date(now);
@@ -90,6 +103,29 @@ public class MainActivity extends AppCompatActivity {
 
         button_diag = (Button) findViewById(R.id.button_diagnosis);
         button_fa = (Button) findViewById(R.id.button_first_aid);
+
+        setting = findViewById(R.id.setting_btn);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+
+                // 제목셋팅
+                alertDialogBuilder.setTitle("지역 설정");
+
+                alertDialogBuilder.setItems(
+                        zone_list,  new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                textView_place.setText("서울시 " + zone_list[which]);
+                                new ReceiveFineDust(zone_list[which]).execute();
+                                new ReceiveShortWeather(zone_number[which]).execute();
+                            }
+                        }
+                );
+                alertDialogBuilder.setNeutralButton("취소", null).show();
+            }
+        });
 
         button_diag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,14 +189,22 @@ public class MainActivity extends AppCompatActivity {
     String pm25value = "";
     String gradePm10 = "";
     String gradePm25 = "";
-    public class ReceiveFineDust extends AsyncTask<URL, Integer, Long>{
 
+    public class ReceiveFineDust extends AsyncTask<URL, Integer, Long>{
+        String station;
+
+        public ReceiveFineDust(){
+            this.station = "종로구";
+        }
+        public ReceiveFineDust(String station){
+            this.station = station;
+        }
 
         protected Long doInBackground(URL... urls){
             String service_key = "tuRZOtYGn%2FJEHn9eJqUvaSv9zB5c2%2F53MTDYHIlNdaL%2BKenmHNrGc2ofsIsEytSgVs%2BZLhpkqlVsXsru%2BrfN6Q%3D%3D";
 
             String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?stationName="
-                    + "종로구"
+                    + station
                     + "&dataTerm=daily"
                     + "&pageNo=1&numOfRows=10&ServiceKey="
                     + service_key + "&ver=1.3";
@@ -267,10 +311,18 @@ public class MainActivity extends AppCompatActivity {
     public class ReceiveShortWeather extends AsyncTask<URL, Integer, Long> {
 
         ArrayList<ShortWeather> shortWeathers = new ArrayList<ShortWeather>();
+        String zone;
+
+        public ReceiveShortWeather(){
+            this.zone = "11110";
+        }
+
+        public ReceiveShortWeather(String zone){
+            this.zone = zone;
+        }
 
         protected Long doInBackground(URL... urls) {
-
-            String url = "http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=3020054000";
+            String url = "http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=" + zone;
 
             OkHttpClient client = new OkHttpClient();
 

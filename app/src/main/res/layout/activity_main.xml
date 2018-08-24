@@ -12,15 +12,30 @@
         android:layout_height="60dp"
         android:gravity="center">
 
-        <TextView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:id="@+id/date"
-            android:textColor="#FFF"
-            android:textSize="25dp"
-            android:fontFamily="@font/bmdohyeon"
-            android:text="8월 23일 목요일"/>
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/date"
+                android:textColor="#FFF"
+                android:textSize="25dp"
+                android:fontFamily="@font/bmdohyeon"
+                android:text="8월 23일 목요일"/>
+
+            <ImageButton
+                android:id="@+id/setting_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/my_btn_setting"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="4dp" />
+        </FrameLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_weight="1"
@@ -54,7 +69,7 @@
             android:id="@+id/place"
             android:textColor="#FFF"
             android:fontFamily="@font/bmdohyeon"
-            android:text="서울광역시 마포구"/>
+            android:text="서울광역시 종로구"/>
 
         <LinearLayout
             android:layout_marginTop="20dp"
