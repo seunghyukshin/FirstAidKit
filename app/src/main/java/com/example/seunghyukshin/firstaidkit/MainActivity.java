@@ -1,8 +1,10 @@
 package com.example.seunghyukshin.firstaidkit;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -55,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
     ImageButton setting;
 
-    private String dataTemp;
-    private String dataPop;
-    private String dataReh;
-    private String dataWfKor;
+    public String dataTemp;
+    public String dataPop;
+    public String dataReh;
+    public String dataWfKor;
 
     public String[] zone_list = {"종로구", "중구", "용산구","성동구","광진구","동대문구", "중랑구",
                             "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구","양천구"
@@ -140,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
 
         weather_background = findViewById(R.id.weather_background);
         helper = findViewById(R.id.helper);
+
+
+        new ReceiveShortWeather().execute();
+        new ReceiveFineDust().execute();
 
 
         updateWeather(0);

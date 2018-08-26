@@ -34,6 +34,15 @@ public class FirstAidListItemView extends LinearLayout{
     }
     public void setImage(int image){
         imageView.setImageResource(image);
+        //imageView.setTag(Integer.valueOf(image));
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public TextView getTextView() {
+        return textView;
     }
     /*
     public void setContent(String content){
