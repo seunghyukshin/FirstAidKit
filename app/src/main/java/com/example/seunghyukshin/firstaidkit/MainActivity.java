@@ -60,31 +60,22 @@ public class MainActivity extends AppCompatActivity {
     private String dataReh;
     private String dataWfKor;
 
-    private String weather_data = "";
-
     public String[] zone_list = {"종로구", "중구", "용산구","성동구","광진구","동대문구", "중랑구",
                             "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구","양천구"
     ,"강서구", "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구", "강동구"};
 
-    public String[] zone_XY = {"60.127", "60.127", "60.126", "61.127", "62.126","62.126", "61.127", "62.128",
-            "61.127", "61.128", "61.129", "61.129", "59.127", "59.127", "59.127", "58.126",
-            "58.126", "58.125", "59.124", "58.126", "59.125", "59.125", "61.125", "61.126", "62.126", "62.126"};
+    public String[] zone_XY = {"60.127", "60.127", "60.126", "61.127", "62.126", "61.127", "62.128",
+            "61.127", "61.128", "61.129", "61.129", "59.127", "59.127", "59.127", "58.126", // 8
+            "58.126", "58.125", "59.124", "58.126", "59.125", "59.125", "61.125", "61.126", "62.126", "62.126"}; // 26
 
     public String[] zone_number = {"11110", "11140", "11170", "11200", "11215", "11230", "11260",
-    "11290", "11305", "11320", "11350", "11410", "11440", "11470", "11500", "11530", "11545", "11560",
+    "11290", "11305", "11320", "11350","11380", "11410", "11440", "11470", "11500", "11530", "11545", "11560",
     "11590", "11620", "11650", "11680", "11710", "11740"};
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-//        Window window = getWindow();
-//        window.setStatusBarColor(0xFFF);
-
         setContentView(R.layout.activity_main);
 
         tmp = findViewById(R.id.tmp);
@@ -117,9 +108,7 @@ public class MainActivity extends AppCompatActivity {
                         zone_list,  new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                textView_place.setText("서울시 " + zone_list[which]);
-                                new ReceiveFineDust(zone_list[which]).execute();
-                                new ReceiveShortWeather(zone_number[which]).execute();
+                                updateWeather(which);
                             }
                         }
                 );
@@ -153,8 +142,7 @@ public class MainActivity extends AppCompatActivity {
         helper = findViewById(R.id.helper);
 
 
-        new ReceiveShortWeather().execute();
-        new ReceiveFineDust().execute();
+        updateWeather(0);
     }
 
     //액션버튼 메뉴 액션바에 집어 넣기
@@ -191,13 +179,12 @@ public class MainActivity extends AppCompatActivity {
     String gradePm25 = "";
 
     public class ReceiveFineDust extends AsyncTask<URL, Integer, Long>{
-        String station;
+        int which;
+        String station = "";
 
-        public ReceiveFineDust(){
-            this.station = "종로구";
-        }
-        public ReceiveFineDust(String station){
-            this.station = station;
+        public ReceiveFineDust(int which){
+            this.which = which;
+            this.station = zone_list[which];
         }
 
         protected Long doInBackground(URL... urls){
@@ -231,14 +218,10 @@ public class MainActivity extends AppCompatActivity {
             gradePm10 = getGrade(pm10);
             gradePm25 = getGrade(pm25);
 
-//            String text = weather_data +
-//                    String.format("%s  %s\n","미세먼지",pm10value+"㎍/㎥ / "+gradePm10)+
-//                    String.format("%s  %s","초미세먼지",pm25value+"㎍/㎥ / "+gradePm25);
-//
-//            textView_shortWeather.setText(text);
-
             textView_pm10.setText(pm10value+"㎍/㎥\n"+gradePm10);
             textView_pm25.setText(pm25value+"㎍/㎥\n"+gradePm25);
+
+            new ReceiveShortestWeather(which).execute();
         }
 
         String getGrade(String pm){
@@ -275,7 +258,6 @@ public class MainActivity extends AppCompatActivity {
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     if (eventType == XmlPullParser.START_TAG) {
                         tagName = parser.getName();
-                        Log.i("FINE DUST TAG NAME :", tagName);
                     }
                     else if (eventType == XmlPullParser.TEXT) {
                         if (tagName.equals("pm10Grade1h") && onPm10) {
@@ -308,17 +290,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    ShortWeather shortWeathers = new ShortWeather();
+
     public class ReceiveShortWeather extends AsyncTask<URL, Integer, Long> {
-
-        ArrayList<ShortWeather> shortWeathers = new ArrayList<ShortWeather>();
         String zone;
-
-        public ReceiveShortWeather(){
-            this.zone = "11110";
-        }
-
-        public ReceiveShortWeather(String zone){
-            this.zone = zone;
+        int which;
+        public ReceiveShortWeather(int which){
+            this.which = which;
+            this.zone = zone_number[which];
         }
 
         protected Long doInBackground(URL... urls) {
@@ -342,96 +322,14 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
-        protected void onPostExecute(Long result) {
-            setWeather();
-            setShowSky();
+        @Override
+        protected void onPostExecute(Long aLong) {
+            Log.i("Info ", shortest_lgt + shortest_pty + shortest_reh + shortest_sky + shortest_t1h + shortest_wsd);
+
             setWeatherData();
+            setWeather();
         }
 
-        void setShowSky(){
-            String info = "";
-            if(Double.parseDouble(shortWeathers.get(0).getTemp()) >= 40){
-                if (shortWeathers.get(0).getWfKor().contains("구름")){
-
-                }
-                else{
-                    info += "날이 매우 덥습니다. 열사병을 조심하세요.";
-                }
-            }
-            if(gradePm10.contains("나쁨") || gradePm25.contains("나쁨")){
-                info += "미세 먼지가 많습니다! 마스크 꼭 사용하세요.";
-            }
-
-            if(Integer.parseInt(shortWeathers.get(0).getPop()) >= 50){
-                if (shortWeathers.get(0).getWfKor().equals("비")){
-                    info += "비가 오고 있어요! 우산을 챙겨주세요.";
-                }
-                else if(shortWeathers.get(0).getWfKor().equals("눈")){
-                    info += "길이 미끄러울 수 있어요! 조심하세요.";
-                }
-                else{
-                    info += "비 올 확률이 높아요! 우산을 챙겨주세요.";
-                }
-            }
-
-            if(shortWeathers.get(0).getWfKor().equals("맑음") && !gradePm10.contains("나쁨") && !gradePm25.contains("나쁨")){
-                info += "놀러나가기 좋은 날씨네요!";
-            }
-
-
-            long now = System.currentTimeMillis();
-            Date date = new Date(now);
-
-            String sky = shortWeathers.get(0).getWfKor();
-            if(sky.equals("맑음")){
-                  if(date.getHours() <= 7 ||20 <= date.getHours()){
-                      weather_background.setImageResource(R.drawable.moon_1);
-                  }
-                  else{
-                      weather_background.setImageResource(R.drawable.sunny_1);
-                  }
-            }
-            else if(sky.equals("구름 조금")){
-                weather_background.setImageResource(R.drawable.s_cloud_1);
-            }
-            else if(sky.equals("구름 많음") || sky.equals("흐림")){
-                weather_background.setImageResource(R.drawable.m_cloud_1);
-            }
-            else if(sky.equals("비") || sky.equals("눈/비")){
-                weather_background.setImageResource(R.drawable.rain_1);
-            }
-            else if(sky.equals("눈")){
-                weather_background.setImageResource(R.drawable.snow_1);
-            }
-            else{
-                weather_background.setImageResource(R.drawable.sunny_1);
-            }
-
-            if (shortWeathers.get(0).getPty() == "1"){
-                weather_background.setImageResource(R.drawable.rain_1);
-            }
-            helper.setText(info);
-        }
-
-        void setWeather(){
-            String data;
-            tmp.setText(shortWeathers.get(0).getTemp() + "℃");
-            textView_pop.setText((shortWeathers.get(0).getWfKor().equals("비") ? "비 오는 중" : shortWeathers.get(0).getPop() + "%"));
-            textView_reh.setText(shortWeathers.get(0).getReh() + "%");
-
-//            data =  String.format("%20s  %10s\n","강수 확률",shortWeathers.get(0).getWfKor().equals("비") ? "비 오는 중" : shortWeathers.get(0).getPop() + "%")+
-//                    String.format("%20s  %10s\n","습도",shortWeathers.get(0).getReh() + "%");
-//
-//            weather_data = data;
-        }
-
-        //intent넘어갈때 넘겨줄 날씨정보
-        void setWeatherData(){
-            dataTemp = shortWeathers.get(0).getTemp();
-            dataPop = shortWeathers.get(0).getPop();
-            dataReh = shortWeathers.get(0).getReh();
-            dataWfKor = shortWeathers.get(0).getWfKor();
-        }
         void parseXML(String xml) {
             try {
                 String tagName = "";
@@ -444,7 +342,6 @@ public class MainActivity extends AppCompatActivity {
                 boolean onReh = false;
                 boolean isItemTag1 = false;
                 boolean onPty = false;
-                int i = 0;
 
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 XmlPullParser parser = factory.newPullParser();
@@ -456,52 +353,42 @@ public class MainActivity extends AppCompatActivity {
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     if (eventType == XmlPullParser.START_TAG) {
                         tagName = parser.getName();
-                        Log.i("WEATHER TAG NAME :", tagName);
                         if (tagName.equals("data")) {
-                            shortWeathers.add(new ShortWeather());
                             onEnd = false;
                             isItemTag1 = true;
                         }
                     } else if (eventType == XmlPullParser.TEXT && isItemTag1) {
                         if (tagName.equals("hour") && !onHour) {
-                            shortWeathers.get(i).setHour(parser.getText());
+                            shortWeathers.setHour(parser.getText());
                             onHour = true;
                         }
                         if (tagName.equals("day") && !onDay) {
-                            shortWeathers.get(i).setDay(parser.getText());
+                            shortWeathers.setDay(parser.getText());
                             onDay = true;
                         }
                         if (tagName.equals("temp") && !onTem) {
-                            shortWeathers.get(i).setTemp(parser.getText());
+                            shortWeathers.setTemp(parser.getText());
                             onTem = true;
                         }
                         if (tagName.equals("wfKor") && !onWfKor) {
-                            shortWeathers.get(i).setWfKor(parser.getText());
+                            shortWeathers.setWfKor(parser.getText());
                             onWfKor = true;
                         }
                         if (tagName.equals("pop") && !onPop) {
-                            shortWeathers.get(i).setPop(parser.getText());
+                            shortWeathers.setPop(parser.getText());
                             onPop = true;
                         }
                         if (tagName.equals("pty") && !onPty) {
-                            shortWeathers.get(i).setPty(parser.getText());
+                            shortWeathers.setPty(parser.getText());
                             onPty = true;
                         }
                         if (tagName.equals("reh") && !onReh) {
-                            shortWeathers.get(i).setReh(parser.getText());
+                            shortWeathers.setReh(parser.getText());
                             onReh = true;
                         }
                     } else if (eventType == XmlPullParser.END_TAG) {
                         if (tagName.equals("s06") && onEnd == false) {
-                            i++;
-                            onHour = false;
-                            onDay = false;
-                            onTem = false;
-                            onWfKor = false;
-                            onPop = false;
-                            isItemTag1 = false;
-                            onEnd = true;
-                            onPty = true;
+                            break;
                         }
                     }
 
@@ -512,5 +399,242 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+
+    String shortest_t1h = "";
+    String shortest_pty = "";
+    String shortest_reh = "";
+    String shortest_sky = "";
+    String shortest_lgt = "";
+    String shortest_wsd = "";
+
+
+    public class ReceiveShortestWeather extends AsyncTask<URL, Integer, Long> {
+        int which;
+        String x;
+        String y;
+        String serviceKey = "tuRZOtYGn%2FJEHn9eJqUvaSv9zB5c2%2F53MTDYHIlNdaL%2BKenmHNrGc2ofsIsEytSgVs%2BZLhpkqlVsXsru%2BrfN6Q%3D%3D";
+
+        public ReceiveShortestWeather(int which){
+            this.which = which;
+            String[] x_y = zone_XY[which].split("\\.");
+            this.x = x_y[0];
+            this.y = x_y[1];
+        }
+
+        protected Long doInBackground(URL... urls) {
+            Long current_time = System.currentTimeMillis();
+            Date current_date = new Date(current_time);
+
+            String currentTime;
+
+            if(current_date.getMinutes() >= 40){
+                currentTime = String.format("%02d", (current_date.getHours())) + "00";
+            }
+            else{
+                currentTime = String.format("%02d", (current_date.getHours() - 1)) + "00";
+            }
+
+            String currentDate = "2018" + String.format("%02d", (current_date.getMonth() + 1)) + String.format("%02d", (current_date.getDate()));
+
+            String url = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib?ServiceKey=" +
+                    serviceKey +
+                    "&base_date=" + currentDate +
+                    "&base_time=" + currentTime +
+                    "&nx=" + this.x +
+                    "&ny=" + this.y +
+                    "&pageNo=1&numOfRows=10";
+
+            Log.i("@@@@@@@@@@@@@@@@@@@", url);
+
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            Response response = null;
+
+            try {
+                response = client.newCall(request).execute();
+                parseXML(response.body().string());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Long aLong) {
+            new ReceiveShortWeather(which).execute();
+        }
+
+
+        void parseXML(String xml) {
+            try {
+                String tagName = "";
+
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                XmlPullParser parser = factory.newPullParser();
+
+                parser.setInput(new StringReader(xml));
+
+                int eventType = parser.getEventType();
+
+                String tag = "";
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+                    if (eventType == XmlPullParser.START_TAG) {
+                        tagName = parser.getName();
+                    } else if (eventType == XmlPullParser.TEXT) {
+                        if (tagName.equals("category")){
+                            tag = parser.getText();
+                        }
+                        if (tagName.equals("obsrValue")) {
+                            if(tag.equals("T1H")){
+                                Log.i(tag, parser.getText());
+                                shortest_t1h = parser.getText();
+                            }
+                            if(tag.equals("PTY")){
+                                Log.i(tag, parser.getText());
+
+                                shortest_pty = parser.getText();
+                            }
+                            if(tag.equals("REH")){
+                                Log.i(tag, parser.getText());
+
+                                shortest_reh = parser.getText();
+                            }
+                            if(tag.equals("SKY")){
+                                Log.i(tag, parser.getText());
+
+                                shortest_sky = parser.getText();
+                            }
+                            if(tag.equals("LGT")){
+                                Log.i(tag, parser.getText());
+
+                                shortest_lgt = parser.getText();
+                            }
+                            if(tag.equals("WSD")){
+                                Log.i(tag, parser.getText());
+
+                                shortest_wsd = parser.getText();
+                            }
+                        }
+                    } else if (eventType == XmlPullParser.END_TAG) {
+                        if (tagName.equals("response")) {
+                            break;
+                        }
+                    }
+
+                    eventType = parser.next();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    void setWeatherData(){
+        dataTemp = shortest_t1h;
+        dataPop = shortWeathers.getPop();
+        if(shortest_reh.equals("-998")){
+            dataReh = shortWeathers.getReh();
+        }
+        else{
+            dataReh = shortest_reh;
+        }
+        dataWfKor = shortWeathers.getWfKor();
+    }
+
+    void setWeather(){
+        tmp.setText(dataTemp + "℃");
+        Log.i("@@@@@@@", shortest_pty);
+        switch (shortest_pty){
+            case "0":
+                textView_pop.setText(dataPop + "%");
+                break;
+
+            case "1":
+                textView_pop.setText("비 오는 중");
+                break;
+
+            case "2":
+                textView_pop.setText("진눈깨비 오는 중");
+                break;
+
+            case "3":
+                textView_pop.setText("눈 오는 중");
+                break;
+
+            default:
+                break;
+        }
+        textView_reh.setText(dataReh + "%");
+
+        String info = "";
+        if(Double.parseDouble(shortest_t1h) >= 40){
+            if (shortWeathers.getWfKor().contains("구름")){
+
+            }
+            else{
+                info += "날이 매우 덥습니다. 열사병을 조심하세요.";
+            }
+        }
+        if(gradePm10.contains("나쁨") || gradePm25.contains("나쁨")){
+            info += "미세 먼지가 많습니다! 마스크 꼭 사용하세요.";
+        }
+
+        if(Integer.parseInt(dataPop) >= 50){
+            if (shortest_pty.equals("1")){
+                info += "비가 오고 있어요! 우산을 챙겨주세요.";
+            }
+            else if(shortest_pty.equals("3")||shortest_pty.equals("2")){
+                info += "길이 미끄러울 수 있어요! 조심하세요.";
+            }
+            else{
+                info += "비 올 확률이 높아요! 우산을 챙겨주세요.";
+            }
+        }
+        else{
+            if(shortest_sky.equals("1") && !gradePm10.contains("나쁨") && !gradePm25.contains("나쁨")){
+                info += "놀러나가기 좋은 날씨네요!";
+            }
+        }
+
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+
+        if(shortest_sky.equals("1")){
+            if(date.getHours() <= 7 ||20 <= date.getHours()){
+                weather_background.setImageResource(R.drawable.moon_1);
+            }
+            else{
+                weather_background.setImageResource(R.drawable.sunny_1);
+            }
+        }
+        else if(shortest_sky.equals("2")){
+            weather_background.setImageResource(R.drawable.s_cloud_1);
+        }
+        else if(shortest_sky.equals("3") || shortest_sky.equals("4")){
+            weather_background.setImageResource(R.drawable.m_cloud_1);
+        }
+
+
+        if(shortest_pty.equals("1") || shortest_pty.equals("2")){
+            weather_background.setImageResource(R.drawable.rain_1);
+        }
+        else if(shortest_pty.equals("3")){
+            weather_background.setImageResource(R.drawable.snow_1);
+        }
+
+        helper.setText(info);
+    }
+
+    public void updateWeather(int which){
+        textView_place.setText("서울시 " + zone_list[which]);
+        new ReceiveFineDust(which).execute();
     }
 }
