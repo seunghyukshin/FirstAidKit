@@ -28,7 +28,7 @@ public class DiagnosisContentView extends LinearLayout {
         textView.setText(Content);
     }
 
-    public void setCheckbox(Boolean checked) {
+    public void setCheckbox(boolean checked) {
         if (checked) {
             Cbox.setChecked(true);
         } else {

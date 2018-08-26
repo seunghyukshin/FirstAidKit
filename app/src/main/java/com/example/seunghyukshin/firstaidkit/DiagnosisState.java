@@ -31,7 +31,7 @@ public class DiagnosisState extends AppCompatActivity {
 
         int[] list = intent.getIntArrayExtra("list");
 
-        Toast.makeText(getApplicationContext(), list[0] + ", " + list[1] + ", " + list[2], Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), list[0] + ", " + list[1] + ", " + list[2], Toast.LENGTH_SHORT).show();
 
         button_go_to_home = (Button) findViewById(R.id.Gotohome);
         button_re_diagnosis = findViewById(R.id.button_re_diagnosis);
@@ -51,19 +51,19 @@ public class DiagnosisState extends AppCompatActivity {
             if (list[0] == 1 && list[9] == 1) {
                 symptom = "머리손상";
                 imageView_symptom.setImageResource(R.drawable.fa_5);
-            } else if (list[14] == 1 && list[15] == 1 && list[0] == 1 || list[9] == 1 && list[1] == 1) {
-                symptom = "아나필락시스(알레르기증상)";
+            } else if (list[14] == 1 && list[15] == 1 && (list[0] == 1 || list[9] == 1) && list[1] == 1) {
+                symptom = "알레르기증상";
                 imageView_symptom.setImageResource(R.drawable.fa_11);
             } else if (list[0] == 1 && list[2] == 1 && list[6] == 1) {
                 symptom = "뇌수막염";
                 imageView_symptom.setImageResource(R.drawable.fa_2);
-            } else if (list[2] == 1 && list[1] == 1 || list[4] == 1 || list[9] == 1 && list[3] == 1) {
+            } else if (list[2] == 1 && (list[1] == 1 || list[4] == 1 || list[9] == 1) && list[3] == 1) {
                 symptom = "열사병";
                 imageView_symptom.setImageResource(R.drawable.fa_12);
-            } else if (list[3] == 1 && list[8] == 1 || list[6] == 1) {
+            } else if (list[3] == 1 && (list[8] == 1 || list[6] == 1)) {
                 symptom = "저체온증";
                 imageView_symptom.setImageResource(R.drawable.fa_13);
-            } else if (list[10] == 1 && list[0] == 1 || list[1] == 1 || list[9] == 1 && list[11] == 1 || list[12] == 1) {
+            } else if (list[10] == 1 && (list[0] == 1 || list[1] == 1 || list[9] == 1 && list[11] == 1 || list[12] == 1)) {
                 symptom = "뇌졸중";
                 imageView_symptom.setImageResource(R.drawable.fa_3);
             } else if (list[5] == 1 && list[13] == 1) {
