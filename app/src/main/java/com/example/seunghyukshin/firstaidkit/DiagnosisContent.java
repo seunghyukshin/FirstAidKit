@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 public class DiagnosisContent {
     String Content;
-    Boolean Checked;
+    boolean Checked;
 
     public DiagnosisContent(String Content, Boolean Checked) {
         this.Content = Content;
@@ -17,7 +17,7 @@ public class DiagnosisContent {
         this.Content = Content;
     }
 
-    public void setCheckbox(Boolean Checked) {
+    public void setCheckbox(boolean Checked) {
         this.Checked = Checked;
     }
 
@@ -25,7 +25,7 @@ public class DiagnosisContent {
         return Content;
     }
 
-    public Boolean getCheckbox() {
+    public boolean getCheckbox() {
         return Checked;
     }
 }

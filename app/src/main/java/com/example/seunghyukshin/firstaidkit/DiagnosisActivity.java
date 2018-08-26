@@ -34,15 +34,15 @@ public class DiagnosisActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_view);
         adapter = new DiagnosisAdapter();
 
-        adapter.addItem(new DiagnosisContent("두통이 있다.",false));//0
-        adapter.addItem(new DiagnosisContent("구토증세가 있다.",false));//1
-        adapter.addItem(new DiagnosisContent("열이 많이난다.",false));//2
-        adapter.addItem(new DiagnosisContent("무력감이 있다.",false));//3
-        adapter.addItem(new DiagnosisContent("근육떨림 증세가 있다.",false));//4
-        adapter.addItem(new DiagnosisContent("심장을 쥐어짜는 통증이 있다.",false));//5
-        adapter.addItem(new DiagnosisContent("오한이 느껴진다.",false));//6
-        adapter.addItem(new DiagnosisContent("피부가 건조해 불편함이 느껴진다.",false));//7
-        adapter.addItem(new DiagnosisContent("피부가 창백하다.",false));//8
+        adapter.addItem(new DiagnosisContent("두통이 있다.", false));//0
+        adapter.addItem(new DiagnosisContent("구토증세가 있다.", false));//1
+        adapter.addItem(new DiagnosisContent("열이 많이난다.", false));//2
+        adapter.addItem(new DiagnosisContent("무력감이 있다.", false));//3
+        adapter.addItem(new DiagnosisContent("근육떨림 증세가 있다.", false));//4
+        adapter.addItem(new DiagnosisContent("심장을 쥐어짜는 통증이 있다.", false));//5
+        adapter.addItem(new DiagnosisContent("오한이 느껴진다.", false));//6
+        adapter.addItem(new DiagnosisContent("피부가 건조해 불편함이 느껴진다.", false));//7
+        adapter.addItem(new DiagnosisContent("피부가 창백하다.", false));//8
         adapter.addItem(new DiagnosisContent("어지럼증이 있다.", false));//9
         adapter.addItem(new DiagnosisContent("편측마비증상(한쪽 팔다리 혹은 얼굴부분 마비증상)이 있다.", false));//10
         adapter.addItem(new DiagnosisContent("언어장애(실어증; 말을 잘 이해하지 못하거나 표현하는 것이 어려운 장애)가 있다.", false));//11
@@ -51,8 +51,6 @@ public class DiagnosisActivity extends AppCompatActivity {
         adapter.addItem(new DiagnosisContent("코가 막히거나 콧물이 난다.", false));//14
         adapter.addItem(new DiagnosisContent("피부에 두드러기나 홍조가 생겼다.", false));//15
 
-        
-        listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -60,17 +58,18 @@ public class DiagnosisActivity extends AppCompatActivity {
 
             }
         });
+        listView.setAdapter(adapter);
 
-        button_complete.setOnClickListener(new View.OnClickListener(){
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(DiagnosisActivity.this, DiagnosisState.class);
+        button_complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DiagnosisActivity.this, DiagnosisState.class);
 
-            intent.putExtra("list", adapter.getList());
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            finish();
-        }
+                intent.putExtra("list", adapter.getList());
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
         });
         button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +84,7 @@ public class DiagnosisActivity extends AppCompatActivity {
     class DiagnosisAdapter extends BaseAdapter {
         ArrayList<DiagnosisContent> items = new ArrayList<DiagnosisContent>();
         ArrayList<Integer> list = new ArrayList<>();
+        ArrayList<Boolean> checklist = new ArrayList<>();
 
         @Override
         public int getCount() {
@@ -108,7 +108,7 @@ public class DiagnosisActivity extends AppCompatActivity {
 
         public int[] getList() {
             int[] temp = new int[list.size()];
-            for(int i = 0; i < list.size(); i++){
+            for (int i = 0; i < list.size(); i++) {
                 temp[i] = list.get(i).intValue();
             }
             return temp;
@@ -119,8 +119,7 @@ public class DiagnosisActivity extends AppCompatActivity {
             DiagnosisContentView view = new DiagnosisContentView(getApplicationContext());
 
             DiagnosisContent item = items.get(position);
-            view.setContent((position+1) + ". " +  item.getContent());
-            view.setCheckbox(item.getCheckbox());
+            view.setContent((position + 1) + ". " + item.getContent());
 
             view.Cbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -128,6 +127,11 @@ public class DiagnosisActivity extends AppCompatActivity {
                     list.set(position, b ? new Integer(1) : new Integer(0));
                 }
             });
+            if(list.get(position)==1){
+                view.Cbox.setChecked(true);
+            }else {
+                view.setCheckbox(item.getCheckbox());
+            }
 
             return view;
         }
