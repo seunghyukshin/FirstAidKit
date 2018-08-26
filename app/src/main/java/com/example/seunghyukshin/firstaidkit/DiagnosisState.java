@@ -38,7 +38,7 @@ public class DiagnosisState extends AppCompatActivity {
 
         textView_symptom = (TextView) findViewById(R.id.symptom);
         lastline = (TextView) findViewById(R.id.last_text);
-        imageView_symptom=(ImageView) findViewById(R.id.symptomImage);
+        imageView_symptom = (ImageView) findViewById(R.id.symptomImage);
         imageView_symptom.setImageResource(R.drawable.stethoscope);
 
         no_symtom = findViewById(R.id.no_symtom);
@@ -47,14 +47,7 @@ public class DiagnosisState extends AppCompatActivity {
         String symptom = "";
         String Lastline = "으로 예상됩니다.";
         for (int i = 0; i < list.length; i++) {
-            if (list[0] == 1) {
-                symptom = "머리손상";
-                imageView_symptom.setImageResource(R.drawable.fa_5);
-            }
-            if (list[1] == 1 || list[2] == 1 || list[3] == 1 || list[4] == 1){
-                symptom = "열사병";
-                imageView_symptom.setImageResource(R.drawable.fa_12);
-            }
+
             if (list[0] == 1 && list[9] == 1) {
                 symptom = "머리손상";
                 imageView_symptom.setImageResource(R.drawable.fa_5);
