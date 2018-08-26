@@ -1,8 +1,10 @@
 package com.example.seunghyukshin.firstaidkit;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -55,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
     ImageButton setting;
 
-    private String dataTemp;
-    private String dataPop;
-    private String dataReh;
-    private String dataWfKor;
+    public String dataTemp;
+    public String dataPop;
+    public String dataReh;
+    public String dataWfKor;
 
     private String weather_data = "";
 
@@ -155,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
 
         new ReceiveShortWeather().execute();
         new ReceiveFineDust().execute();
+
+
     }
 
     //액션버튼 메뉴 액션바에 집어 넣기

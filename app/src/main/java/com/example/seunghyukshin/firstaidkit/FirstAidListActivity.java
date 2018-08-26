@@ -1,6 +1,8 @@
 package com.example.seunghyukshin.firstaidkit;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -128,12 +131,14 @@ public class FirstAidListActivity extends AppCompatActivity {
         else if(Integer.parseInt(dataPop)>=50){
             adapter_today_fa.addItem(new FirstAidListItem(R.drawable.fa_13,"저체온증"));
         }
+        adapter_today_fa.getSharedPreference(0);
         /*
         dataTemp
         dataPop;
         dataReh;
         dataWfKor;*/
 
+        //weather_background.setTag(Integer.valueOf(R.drawable.rain_1));
 
         listView_today_fa.setAdapter(adapter_today_fa);
     }
@@ -178,6 +183,23 @@ public class FirstAidListActivity extends AppCompatActivity {
             view.setImage(item.getImage());
             return view;
 
+        }
+
+        public void getSharedPreference(int position){
+            FirstAidListItemView view = new FirstAidListItemView(getApplicationContext());
+            FirstAidListItem item = items.get(position);
+
+            String widget_text = item.getName();
+            int widget_image = item.getImage();
+
+
+            SharedPreferences sharedPreferences = getSharedPreferences("com.example.seunghyukshin.firstaidkit.sharedPreferences", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("widget_text", widget_text);
+            editor.putInt("widget_image",widget_image);
+
+            //editor.putInt("weather_background",(Integer) weather_background.getTag());
+            editor.commit();
         }
     }
 
