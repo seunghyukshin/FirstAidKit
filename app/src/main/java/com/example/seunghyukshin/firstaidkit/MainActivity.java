@@ -427,7 +427,15 @@ public class MainActivity extends AppCompatActivity {
             Long current_time = System.currentTimeMillis();
             Date current_date = new Date(current_time);
 
-            String currentTime = String.format("%02d", (current_date.getHours())) + String.format("%02d", (current_date.getMinutes()));
+            String currentTime;
+
+            if(current_date.getMinutes() >= 40){
+                currentTime = String.format("%02d", (current_date.getHours())) + "00";
+            }
+            else{
+                currentTime = String.format("%02d", (current_date.getHours() - 1)) + "00";
+            }
+
             String currentDate = "2018" + String.format("%02d", (current_date.getMonth() + 1)) + String.format("%02d", (current_date.getDate()));
 
             String url = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib?ServiceKey=" +
@@ -528,7 +536,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
     void setWeatherData(){
         dataTemp = shortest_t1h;
         dataPop = shortWeathers.getPop();
