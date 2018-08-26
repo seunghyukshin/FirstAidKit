@@ -536,7 +536,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
     void setWeatherData(){
         dataTemp = shortest_t1h;
         dataPop = shortWeathers.getPop();
