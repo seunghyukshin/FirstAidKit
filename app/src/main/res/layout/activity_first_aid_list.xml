@@ -31,7 +31,7 @@
         android:orientation="vertical">
         <TextView
             android:layout_margin="4dp"
-            android:background="@drawable/my_button_4"
+            android:background="@drawable/first_aid_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="오늘의 응급상황"
@@ -54,7 +54,7 @@
         android:background="#585858">
         <TextView
             android:layout_margin="4dp"
-            android:background="@drawable/my_button_4"
+            android:background="@drawable/first_aid_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bmdohyeon"
