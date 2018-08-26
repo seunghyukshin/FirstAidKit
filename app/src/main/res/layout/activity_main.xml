@@ -69,7 +69,7 @@
             android:id="@+id/place"
             android:textColor="#FFF"
             android:fontFamily="@font/bmdohyeon"
-            android:text="서울광역시 종로구"/>
+            android:text="서울시 종로구"/>
 
         <LinearLayout
             android:layout_marginTop="20dp"

@@ -31,14 +31,14 @@ public class DiagnosisState extends AppCompatActivity {
 
         int[] list = intent.getIntArrayExtra("list");
 
-        Toast.makeText(getApplicationContext(), list[0] + ", " + list[1] + ", " + list[2], Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), list[0] + ", " + list[1] + ", " + list[2], Toast.LENGTH_SHORT).show();
 
         button_go_to_home = (Button) findViewById(R.id.Gotohome);
         button_re_diagnosis = findViewById(R.id.button_re_diagnosis);
 
         textView_symptom = (TextView) findViewById(R.id.symptom);
         lastline = (TextView) findViewById(R.id.last_text);
-        imageView_symptom=(ImageView) findViewById(R.id.symptomImage);
+        imageView_symptom = (ImageView) findViewById(R.id.symptomImage);
         imageView_symptom.setImageResource(R.drawable.stethoscope);
 
         no_symtom = findViewById(R.id.no_symtom);
@@ -47,30 +47,23 @@ public class DiagnosisState extends AppCompatActivity {
         String symptom = "";
         String Lastline = "으로 예상됩니다.";
         for (int i = 0; i < list.length; i++) {
-            if (list[0] == 1) {
-                symptom = "머리손상";
-                imageView_symptom.setImageResource(R.drawable.fa_5);
-            }
-            if (list[1] == 1 || list[2] == 1 || list[3] == 1 || list[4] == 1){
-                symptom = "열사병";
-                imageView_symptom.setImageResource(R.drawable.fa_12);
-            }
+
             if (list[0] == 1 && list[9] == 1) {
                 symptom = "머리손상";
                 imageView_symptom.setImageResource(R.drawable.fa_5);
-            } else if (list[14] == 1 && list[15] == 1 && list[0] == 1 || list[9] == 1 && list[1] == 1) {
-                symptom = "아나필락시스(알레르기증상)";
+            } else if (list[14] == 1 && list[15] == 1 && (list[0] == 1 || list[9] == 1) && list[1] == 1) {
+                symptom = "알레르기증상";
                 imageView_symptom.setImageResource(R.drawable.fa_11);
             } else if (list[0] == 1 && list[2] == 1 && list[6] == 1) {
                 symptom = "뇌수막염";
                 imageView_symptom.setImageResource(R.drawable.fa_2);
-            } else if (list[2] == 1 && list[1] == 1 || list[4] == 1 || list[9] == 1 && list[3] == 1) {
+            } else if (list[2] == 1 && (list[1] == 1 || list[4] == 1 || list[9] == 1) && list[3] == 1) {
                 symptom = "열사병";
                 imageView_symptom.setImageResource(R.drawable.fa_12);
-            } else if (list[3] == 1 && list[8] == 1 || list[6] == 1) {
+            } else if (list[3] == 1 && (list[8] == 1 || list[6] == 1)) {
                 symptom = "저체온증";
                 imageView_symptom.setImageResource(R.drawable.fa_13);
-            } else if (list[10] == 1 && list[0] == 1 || list[1] == 1 || list[9] == 1 && list[11] == 1 || list[12] == 1) {
+            } else if (list[10] == 1 && (list[0] == 1 || list[1] == 1 || list[9] == 1 && list[11] == 1 || list[12] == 1)) {
                 symptom = "뇌졸중";
                 imageView_symptom.setImageResource(R.drawable.fa_3);
             } else if (list[5] == 1 && list[13] == 1) {

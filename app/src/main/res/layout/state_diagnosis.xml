@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.seunghyukshin.firstaidkit.DiagnosisState"
     android:orientation="vertical"
-    android:background="#F3F781">
+    android:background="#F3E602">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,10 +73,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="symptom"
-                android:textSize="45dp"
+                android:textSize="35dp"
                 android:id="@+id/symptom"/>
             <TextView
-                android:textColor="#F3F781"
+                android:textColor="#F3E602"
                 android:fontFamily="@font/bmdohyeon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <Button
-                android:textColor="#F3F781"
+                android:textColor="#F3E602"
                 android:layout_margin="12dp"
                 android:background="@drawable/dia_button"
 
@@ -108,7 +108,7 @@
             <Button
                 android:layout_gravity="right|center_vertical"
 
-                android:textColor="#F3F781"
+                android:textColor="#F3E602"
                 android:fontFamily="@font/bmdohyeon"
 
                 android:background="@drawable/dia_button"
