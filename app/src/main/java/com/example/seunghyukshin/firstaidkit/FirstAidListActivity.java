@@ -88,8 +88,15 @@ public class FirstAidListActivity extends AppCompatActivity {
                 //FirstAidListItem item = (FirstAidListItem) adapter_fa.getItem(position);
                 FirstAidListItem item= (FirstAidListItem) adapter_fa.items.get(position);//선택한 병
 
-                Intent intent = new Intent( FirstAidListActivity.this, FirstAidActivity.class);
+                Intent intent;
                 String name = item.getName();
+                if(name.equals("골절")){
+                    intent = new Intent( FirstAidListActivity.this, FirstAidDetailListActivity.class);
+                }
+                else{
+                    intent = new Intent( FirstAidListActivity.this, FirstAidActivity.class);
+                }
+
                 intent.putExtra("NAME",name);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
