@@ -143,11 +143,6 @@ public class MainActivity extends AppCompatActivity {
         weather_background = findViewById(R.id.weather_background);
         helper = findViewById(R.id.helper);
 
-
-        new ReceiveShortWeather().execute();
-        new ReceiveFineDust().execute();
-
-
         updateWeather(0);
     }
 
