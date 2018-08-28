@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 public class FirstAidListActivity extends AppCompatActivity {
@@ -186,13 +187,10 @@ public class FirstAidListActivity extends AppCompatActivity {
         }
 
         public void getSharedPreference(int position){
-            FirstAidListItemView view = new FirstAidListItemView(getApplicationContext());
-            FirstAidListItem item = items.get(position);
 
+            FirstAidListItem item= (FirstAidListItem) adapter_today_fa.items.get(position);//선택한 병
             String widget_text = item.getName();
             int widget_image = item.getImage();
-
-
             SharedPreferences sharedPreferences = getSharedPreferences("com.example.seunghyukshin.firstaidkit.sharedPreferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("widget_text", widget_text);
