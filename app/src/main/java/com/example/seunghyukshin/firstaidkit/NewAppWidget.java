@@ -1,8 +1,10 @@
 package com.example.seunghyukshin.firstaidkit;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 import android.widget.TextView;
@@ -38,6 +40,14 @@ public class NewAppWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
             SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.seunghyukshin.firstaidkit.sharedPreferences",Context.MODE_PRIVATE);
+
+            // 위젯클릭시 intent로 화면전환
+            /*
+            Intent intent = new Intent(context,"????");
+            PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,0);
+            remoteViews.setOnClickPendingIntent(R.id.widget_layout,pendingIntent);
+*/
+            //
             remoteViews.setImageViewResource(R.id.appwidget_image,sharedPreferences.getInt("widget_image",R.drawable.firstaid));
             remoteViews.setTextViewText(R.id.appwidget_text,sharedPreferences.getString("widget_text","haha"));
             appWidgetManager.updateAppWidget(appWidgetId,remoteViews);
