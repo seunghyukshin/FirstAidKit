@@ -61,7 +61,7 @@ public class FirstAidListActivity extends AppCompatActivity {
         //가나다 순으로
         adapter_fa = new FirstAidAdapter();
         adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_0,"골절"));
-        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_1,"기도폐쇄"));
+        adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_1,"기도 폐쇄"));
         adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_2,"뇌수막염"));
         adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_3,"뇌졸중"));
         adapter_fa.addItem(new FirstAidListItem(R.drawable.fa_4,"당뇨 응급상황"));
@@ -83,24 +83,16 @@ public class FirstAidListActivity extends AppCompatActivity {
 
         listView_fa.setAdapter(adapter_fa);
 
+        listView_today_fa.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                goDetailListActivity(true, position);
+            }
+        });
         listView_fa.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                //FirstAidListItem item = (FirstAidListItem) adapter_fa.getItem(position);
-                FirstAidListItem item= (FirstAidListItem) adapter_fa.items.get(position);//선택한 병
-
-                Intent intent;
-                String name = item.getName();
-                if(name.equals("골절")){
-                    intent = new Intent( FirstAidListActivity.this, FirstAidDetailListActivity.class);
-                }
-                else{
-                    intent = new Intent( FirstAidListActivity.this, FirstAidActivity.class);
-                }
-
-                intent.putExtra("NAME",name);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                goDetailListActivity(false, position);
             }
         });
 
@@ -128,6 +120,30 @@ public class FirstAidListActivity extends AppCompatActivity {
 
         setAdapterTodayFA();
 
+    }
+
+    private void goDetailListActivity(boolean today, int position){
+        FirstAidListItem item;
+        if(today){
+            item = (FirstAidListItem) adapter_today_fa.items.get(position);//선택한 병
+        }
+        else{
+            item = (FirstAidListItem) adapter_fa.items.get(position);//선택한 병
+        }
+
+        Intent intent;
+        String name = item.getName();
+        if(name.equals("골절") || name.equals("기도 폐쇄") || name.equals("당뇨 응급상황")
+                || name.equals("저체온증") || name.equals("중독/해로운 물질") || name.equals("화상")){
+            intent = new Intent( FirstAidListActivity.this, FirstAidDetailListActivity.class);
+        }
+        else{
+            intent = new Intent( FirstAidListActivity.this, FirstAidActivity.class);
+        }
+
+        intent.putExtra("NAME",name);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     //가져온 날씨정보로 조건에 맞을시 출력해주도록

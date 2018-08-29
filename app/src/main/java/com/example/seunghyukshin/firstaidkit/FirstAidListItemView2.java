@@ -1,6 +1,7 @@
 package com.example.seunghyukshin.firstaidkit;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +29,9 @@ public class FirstAidListItemView2 extends LinearLayout{
     }
 
     public void setName(String name){
+        if(name.length() > 10) {
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
+        }
         textView.setText(name);
     }
     public void setImage(int image){
