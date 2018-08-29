@@ -92,16 +92,16 @@
                     android:textColor="#FFF"
                     android:textAlignment="center"
                     android:fontFamily="@font/bmdohyeon"
-                    android:textSize="13dp"/>
+                    android:textSize="15dp"/>
                 <TextView
                     android:gravity="center"
                     android:id="@+id/pop"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
-                    android:textColor="#FFF"
+                    android:textColor="#A9D0F5"
                     android:textAlignment="center"
                     android:fontFamily="@font/bmdohyeon"
-                    android:textSize="13dp"/>
+                    android:textSize="15dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_margin="2dp"
@@ -118,16 +118,16 @@
                     android:textColor="#FFF"
                     android:textAlignment="center"
                     android:fontFamily="@font/bmdohyeon"
-                    android:textSize="13dp"/>
+                    android:textSize="15dp"/>
                 <TextView
                     android:gravity="center"
                     android:id="@+id/reh"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
-                    android:textColor="#FFF"
+                    android:textColor="#A9D0F5"
                     android:textAlignment="center"
                     android:fontFamily="@font/bmdohyeon"
-                    android:textSize="13dp"/>
+                    android:textSize="15dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_margin="2dp"
@@ -144,16 +144,16 @@
                     android:textColor="#FFF"
                     android:textAlignment="center"
                     android:fontFamily="@font/bmdohyeon"
-                    android:textSize="13dp"/>
+                    android:textSize="15dp"/>
                 <TextView
                     android:gravity="center"
                     android:id="@+id/pm10"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
-                    android:textColor="#FFF"
+                    android:textColor="#A9D0F5"
                     android:textAlignment="center"
                     android:fontFamily="@font/bmdohyeon"
-                    android:textSize="11dp"/>
+                    android:textSize="13dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_margin="2dp"
@@ -170,16 +170,16 @@
                     android:textColor="#FFF"
                     android:textAlignment="center"
                     android:fontFamily="@font/bmdohyeon"
-                    android:textSize="13dp"/>
+                    android:textSize="15dp"/>
                 <TextView
                     android:gravity="center"
                     android:id="@+id/pm25"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
-                    android:textColor="#FFF"
+                    android:textColor="#A9D0F5"
                     android:textAlignment="center"
                     android:fontFamily="@font/bmdohyeon"
-                    android:textSize="11dp"/>
+                    android:textSize="13dp"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -196,7 +196,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:textColor="#A9D0F5"
+                    android:textColor="#FFF"
                     android:gravity="center"
                     android:id="@+id/helper"
                     android:fontFamily="@font/bmdohyeon"
