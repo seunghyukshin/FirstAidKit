@@ -30,7 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
-        android:text="@string/appwidget_text"
+        android:text="구급상자"
         android:textColor="#ffffff"
         android:textSize="28dp"
         android:gravity="center"
