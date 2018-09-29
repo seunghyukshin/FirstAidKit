@@ -151,11 +151,17 @@ public class FirstAidListActivity extends AppCompatActivity {
         //if dataTemp>20 일때 fa_12
         if(Double.parseDouble(dataTemp)>=30.0){
             adapter_today_fa.addItem(new FirstAidListItem(R.drawable.fa_12,"열사병"));
+            adapter_today_fa.getSharedPreference(0);
         }
         else if(Integer.parseInt(dataPop)>=50){
             adapter_today_fa.addItem(new FirstAidListItem(R.drawable.fa_13,"저체온증"));
+            adapter_today_fa.getSharedPreference(0);
         }
-        adapter_today_fa.getSharedPreference(0);
+        else if(Integer.parseInt(dataReh)>=73){
+            adapter_today_fa.addItem(new FirstAidListItem(R.drawable.fa_16,"중독/해로운 물질"));
+            adapter_today_fa.getSharedPreference(0);
+        }
+//        adapter_today_fa.getSharedPreference(0);
         /*
         dataTemp
         dataPop;
